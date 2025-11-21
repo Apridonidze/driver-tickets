@@ -22,6 +22,9 @@ const Exam = () => {
     const [correct , setCorrect] = useState(0)
     const [incorrect , setIncorrect] = useState(0)
 
+    const [answeredTicket , setAnsweredTicket] = useState([])
+    const [isAnswered , setIsAnswered] = useState(null)
+
     useEffect(() => {
 
         const  fetchExams = async () => {
@@ -52,6 +55,7 @@ const Exam = () => {
                     setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
                     setQuestionAudio(data[targetId].QuestionAudio)
                     setAnswers(data[targetId].Answers)
+                    setIsAnswered(answeredTicket.filter(ans => ans.ticketId === targetId))
                     setIsLoaded(true)
 
                 }
@@ -64,7 +68,7 @@ const Exam = () => {
 
     },[data, targetId])
 
-    
+
     useEffect(() => {
 
         if(questionAudioRef && questionAudioRef.current){
@@ -81,14 +85,57 @@ const Exam = () => {
 
              const correctIndex = answers.findIndex(a => a.IsCorrect);
 
-            if(answer.IsCorrect) {setCorrect(prev => prev + 1) ; btnRef.current[answer.answerId].classList.add('btn-success')}
-            else {setIncorrect(prev => prev + 1) ; btnRef.current[answer.answerId].classList.add('btn-danger') ; btnRef.current[correctIndex].classList.add('btn-success')}
+            if(answer.IsCorrect){
+
+                setCorrect(prev => prev + 1) ;
+                btnRef.current[answer.answerId].classList.add('btn-success') ;
+                setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}])
+
+            }else {
+                setIncorrect(prev => prev + 1) ;
+                btnRef.current[answer.answerId].classList.add('btn-danger') ;
+                btnRef.current[correctIndex].classList.add('btn-success')
+                setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}])
+            }
 
             setTimeout(() => {
                 setTargetId(prev => prev + 1)
                 btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
             }, 1000)
             
+        }
+    }
+
+    useEffect(() => {
+        if(isAnswered && isAnswered[0]){
+            if(btnRef && btnRef.current){
+                
+                if(isAnswered[0].correctId === isAnswered[0].answerId){
+                    
+                    btnRef.current[isAnswered[0].correctId].classList.add('btn-success')
+                }else {
+                    btnRef.current[isAnswered[0].answerId].classList.add('btn-danger')
+                    btnRef.current[isAnswered[0].correctId].classList.add('btn-success')
+                }
+
+            }
+        }else {
+            return
+        }
+    },[isAnswered])
+
+    const handleAnswerButton = (d) => {
+        if(btnRef && btnRef.current){
+               if(d === '+'){
+            setTargetId(prev => (prev + 1 > data.length - 1 ? prev : prev + 1))
+            btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+        }else {
+
+            setTargetId(prev => (prev - 1  < 0  ? prev : prev - 1))
+            btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+        }
+        }else {
+            return
         }
     }
 
@@ -100,19 +147,23 @@ const Exam = () => {
             <div className="exam-body">
                 {correct}
                 {incorrect}
+                <h1>reset</h1>
                 {isLoaded && 
                     <div className="ticket">
                         <div className="ticket-img">
                             {img === false ? <></> : <img src={img}/>}
                         </div>
-                        <div className="ticket-desc">
+                        <div className="ticket-desc ">
                             <h6>{ticket.Description}</h6>
                         </div>
                         <div className="ticket-content">
+                            <h5>{ticket.Question}</h5>
                             <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
                         <div className="ticket-answers">
-                            {answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answer.Text}</button>)}
+                            {isAnswered && !isAnswered[0]? 
+                            answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answerId} {answer.Text}</button>) 
+                            : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
                         </div>
                     </div> }
             </div>
@@ -124,8 +175,8 @@ const Exam = () => {
                 
                 <div className="buttons-end col">
                         
-                    <button onClick={() => setTargetId(prev => (prev - 1  < 0  ? prev : prev - 1))}>Prev</button>
-                    <button onClick={() => setTargetId(prev => (prev + 1 > data.length - 1 ? prev : prev + 1))}>Next</button>
+                    <button onClick={() => handleAnswerButton('-')}>Prev</button>
+                    <button onClick={() => handleAnswerButton('+')}>Next</button>
 
                 </div>
             </div>
