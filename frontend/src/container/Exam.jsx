@@ -66,7 +66,19 @@ const Exam = () => {
             <Header />
 
             <div className="exam-body">
-                {isLoaded && ticket.Description}
+                {isLoaded && 
+                    <div className="ticket">
+                        <div className="ticket-img">
+                            <img src={img}/>
+                        </div>
+                        <div className="ticket-desc">
+                            <h6>{ticket.Description}</h6>
+                        </div>
+                        <div className="ticket-content"></div>
+                        <div className="ticket-answers">
+                            {answers.map((answer , answerId) => <button key={answerId}>{answer.Text}</button>)}
+                        </div>
+                    </div> }
             </div>
             
         </div>
