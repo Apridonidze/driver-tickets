@@ -140,7 +140,10 @@ const Exam = () => {
     } //refactor
 
 
-    console.log(saved)
+    useEffect(() => {
+        
+    console.log(saved) //send saved to database
+    },[saved])
 
     
     return(
