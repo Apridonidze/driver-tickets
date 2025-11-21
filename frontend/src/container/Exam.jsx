@@ -84,6 +84,11 @@ const Exam = () => {
             if(answer.IsCorrect) {setCorrect(prev => prev + 1) ; btnRef.current[answer.answerId].classList.add('btn-success')}
             else {setIncorrect(prev => prev + 1) ; btnRef.current[answer.answerId].classList.add('btn-danger') ; btnRef.current[correctIndex].classList.add('btn-success')}
 
+            setTimeout(() => {
+                setTargetId(prev => prev + 1)
+                btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+            }, 1000)
+            
         }
     }
 
