@@ -16,7 +16,7 @@ const Exam = () => {
 
 
     const questionAudioRef = useRef(null)
-    const btnRef = useRef(null)
+    const btnRef = useRef([])
 
     const [count ,setCount] = useState(0)
     const [correct , setCorrect] = useState(0)
@@ -76,9 +76,15 @@ const Exam = () => {
 
     const handleAnswers = (answer) => {
 
-        if(answer) {setCorrect(prev => prev + 1)}
-        else {setIncorrect(prev => prev + 1)}
+        
+        if(btnRef && btnRef.current){
 
+             const correctIndex = answers.findIndex(a => a.IsCorrect);
+
+            if(answer.IsCorrect) {setCorrect(prev => prev + 1) ; btnRef.current[answer.answerId].classList.add('btn-success')}
+            else {setIncorrect(prev => prev + 1) ; btnRef.current[answer.answerId].classList.add('btn-danger') ; btnRef.current[correctIndex].classList.add('btn-success')}
+
+        }
     }
 
     
@@ -101,7 +107,7 @@ const Exam = () => {
                             <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
                         <div className="ticket-answers">
-                            {answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={btnRef} onClick={() => handleAnswers(answer.IsCorrect)}>{answer.Text}</button>)}
+                            {answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answer.Text}</button>)}
                         </div>
                     </div> }
             </div>
