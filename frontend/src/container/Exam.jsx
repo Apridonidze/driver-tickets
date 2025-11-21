@@ -44,7 +44,7 @@ const Exam = () => {
                 if(data){
 
                     setTicket(data[targetId])
-                    setImg(data[targetId].Image)
+                    setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
                     setQuestionAudio(data[targetId].QuestionAudio)
                     setAnswers(data[targetId].Answers)
                     setIsLoaded(true)
@@ -67,6 +67,7 @@ const Exam = () => {
         }
 
     },[questionAudio , questionAudioRef])
+
     
     return(
         <div className="exam-container container">
@@ -76,14 +77,13 @@ const Exam = () => {
                 {isLoaded && 
                     <div className="ticket">
                         <div className="ticket-img">
-                            <img src={img}/>
+                            {img === false ? <></> : <img src={img}/>}
                         </div>
                         <div className="ticket-desc">
                             <h6>{ticket.Description}</h6>
                         </div>
                         <div className="ticket-content">
-                            <audio ref={questionAudioRef} src={questionAudio}>
-                            </audio>
+                            <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
                         <div className="ticket-answers">
                             {answers.map((answer , answerId) => <button key={answerId}>{answer.Text}</button>)}
