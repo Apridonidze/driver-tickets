@@ -55,7 +55,7 @@ const Exam = () => {
                     setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
                     setQuestionAudio(data[targetId].QuestionAudio)
                     setAnswers(data[targetId].Answers) //send to db to save
-                    setIsAnswered(answeredTicket.filter(ans => ans.ticketId === targetId)) //after fetcihn answers filters it and set in state
+                    setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) //after fetcihn answers filters it and set in state
                     setIsLoaded(true)
 
                 }
