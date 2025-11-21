@@ -15,6 +15,7 @@ const Exam = () => {
     const [isLoaded,setIsLoaded] = useState(false)
     const [saved,setSaved] = useState([])
 
+    const explanationAudioRef = useRef(null)
     const questionAudioRef = useRef(null)
     const btnRef = useRef([])
 
@@ -77,6 +78,21 @@ const Exam = () => {
 
     },[questionAudio , questionAudioRef])
 
+    const handleDescription = () => {
+        if(explanationAudioRef && explanationAudioRef.current && questionAudioRef && questionAudioRef.current){
+           if(isLoaded){
+                questionAudioRef.current.stop()
+                explanationAudioRef.current.play()
+           }else{
+
+               return
+           }
+        }
+    }
+
+    useEffect(() => {
+        handleDescription()
+    },[explanationAudio, explanationAudioRef])
 
     const handleAnswers = (answer) => {
 
@@ -180,11 +196,12 @@ const Exam = () => {
                         </div>
                         <div className="ticket-desc ">
                             <div className="desc-top">
-                                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseId" aria-expanded="false" aria-controls="collapseId">collapse</button>
+                                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseId" aria-expanded="false" aria-controls="collapseId" onClick={handleDescription}>collapse</button>
                             </div>
                             <div class="collapse" id="collapseId">
                                 
                                 <h6>{ticket.Description}</h6>
+                                <audio ref={explanationAudioRef} src={explanationAudio}></audio>
                             
                             </div>
                         </div>
