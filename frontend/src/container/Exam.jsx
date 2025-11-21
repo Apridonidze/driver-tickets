@@ -18,13 +18,17 @@ const Exam = () => {
     const questionAudioRef = useRef(null)
     const btnRef = useRef(null)
 
+    const [count ,setCount] = useState(0)
+    const [correct , setCorrect] = useState(0)
+    const [incorrect , setIncorrect] = useState(0)
+
     useEffect(() => {
 
         const  fetchExams = async () => {
 
             try{
 
-                axios.get('http://localhost:8080/data').then(resp => {setData(resp.data), console.log(resp)})
+                axios.get('http://localhost:8080/data').then(resp => {setData(resp.data), setCount(resp.data.length), console.log(resp)})
 
             }catch(err){
                 console.log(err)
@@ -71,8 +75,10 @@ const Exam = () => {
 
 
     const handleAnswers = (answer) => {
-        if(answer === true) alert('correct')
-        else alert('false')
+
+        if(answer) {setCorrect(prev => prev + 1)}
+        else {setIncorrect(prev => prev + 1)}
+
     }
 
     
@@ -81,6 +87,8 @@ const Exam = () => {
             <Header />
 
             <div className="exam-body">
+                {correct}
+                {incorrect}
                 {isLoaded && 
                     <div className="ticket">
                         <div className="ticket-img">
@@ -93,7 +101,7 @@ const Exam = () => {
                             <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
                         <div className="ticket-answers">
-                            {answers.map((answer , answerId) => <button key={answerId} onClick={() => handleAnswers(answer.IsCorrect)}>{answer.Text}</button>)}
+                            {answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={btnRef} onClick={() => handleAnswers(answer.IsCorrect)}>{answer.Text}</button>)}
                         </div>
                     </div> }
             </div>
