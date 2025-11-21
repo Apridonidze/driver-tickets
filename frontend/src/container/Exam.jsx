@@ -13,7 +13,7 @@ const Exam = () => {
     const [explanationAudio, setExplanationAudio] = useState()
     const [answers , setAnswers] = useState()
     const [isLoaded,setIsLoaded] = useState(false)
-
+    const [saved,setSaved] = useState([])
 
     const questionAudioRef = useRef(null)
     const btnRef = useRef([])
@@ -139,6 +139,9 @@ const Exam = () => {
         }
     } //refactor
 
+
+    console.log(saved)
+
     
     return(
         <div className="exam-container container">
@@ -170,7 +173,7 @@ const Exam = () => {
 
             <div className="buttons row">
                 <div className="buttons-start col">
-                    <button>Save</button>
+                    <button onClick={() => setSaved(prev => [...prev, {id : targetId}])}>Save</button>
                 </div>
                 
                 <div className="buttons-end col">
