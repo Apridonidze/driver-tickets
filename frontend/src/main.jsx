@@ -7,11 +7,11 @@ import Exam from './container/Exam'
 import Favorite from './container/Favorite'
 
 const router = createBrowserRouter([
+  
   {path : '/'  , element : <Main />},
   {path : '/exam'  , element : <Exam/>},
   {path : '/favorites'  , element : <Favorite/>},
   {path : '*'  , element : <Main/>},
-
 
 ])
 
