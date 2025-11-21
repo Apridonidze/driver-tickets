@@ -8,8 +8,8 @@ const Main = () => {
             </div>
 
             <div className="buttons row row-cols-2">
-                <Link to='/' className="btn btn-primary">Start Exam</Link>
-                <Link to='/' className="btn btn-primary">Saved Tickets</Link>
+                <Link to='/exam' className="btn btn-primary">Start Exam</Link>
+                <Link to='/favorites' className="btn btn-primary">Saved Tickets</Link>
             </div>
 
         </div>
