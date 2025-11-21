@@ -1,18 +1,21 @@
 import axios from 'axios'
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import Header from "../component/Header"
 import { useState } from 'react'
 
 const Exam = () => {
 
     const [data ,setData] = useState()
-    const [targetId , setTargetId] = useState(1082)
+    const [targetId , setTargetId] = useState(0)
     const [ticket , setTicket] = useState()
     const [img , setImg] = useState()
     const [questionAudio, setQuestionAudio] = useState()
     const [explanationAudio, setExplanationAudio] = useState()
     const [answers , setAnswers] = useState()
     const [isLoaded,setIsLoaded] = useState(false)
+
+
+    const questionAudioRef = useRef(null)
 
     useEffect(() => {
 
@@ -35,9 +38,8 @@ const Exam = () => {
 
     useEffect(() => {
 
-        const targetTicket = async () => {
+        const targetTicket =  () => {
 
-            try{
 
                 if(data){
 
@@ -51,16 +53,21 @@ const Exam = () => {
 
                 return 
 
-            }catch(err){
-                console.log(err)
-            }
-
         }
 
         targetTicket();
 
     },[data, targetId])
 
+    
+    useEffect(() => {
+
+        if(questionAudioRef && questionAudioRef.current){
+            questionAudioRef.current.play()
+        }
+
+    },[questionAudio , questionAudioRef])
+    
     return(
         <div className="exam-container container">
             <Header />
@@ -74,7 +81,10 @@ const Exam = () => {
                         <div className="ticket-desc">
                             <h6>{ticket.Description}</h6>
                         </div>
-                        <div className="ticket-content"></div>
+                        <div className="ticket-content">
+                            <audio ref={questionAudioRef} src={questionAudio}>
+                            </audio>
+                        </div>
                         <div className="ticket-answers">
                             {answers.map((answer , answerId) => <button key={answerId}>{answer.Text}</button>)}
                         </div>
