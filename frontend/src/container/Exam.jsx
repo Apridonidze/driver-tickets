@@ -12,6 +12,7 @@ const Exam = () => {
     const [questionAudio, setQuestionAudio] = useState()
     const [explanationAudio, setExplanationAudio] = useState()
     const [answers , setAnswers] = useState()
+    const [isLoaded,setIsLoaded] = useState(false)
 
     useEffect(() => {
 
@@ -44,6 +45,7 @@ const Exam = () => {
                     setImg(data[targetId].Image)
                     setQuestionAudio(data[targetId].QuestionAudio)
                     setAnswers(data[targetId].Answers)
+                    setIsLoaded(true)
 
                 }
 
@@ -62,6 +64,10 @@ const Exam = () => {
     return(
         <div className="exam-container container">
             <Header />
+
+            <div className="exam-body">
+                {isLoaded && ticket.Description}
+            </div>
             
         </div>
     )
