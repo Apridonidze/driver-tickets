@@ -179,7 +179,14 @@ const Exam = () => {
                             {img === false ? <></> : <img src={img}/>}
                         </div>
                         <div className="ticket-desc ">
-                            <h6>{ticket.Description}</h6>
+                            <div className="desc-top">
+                                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseId" aria-expanded="false" aria-controls="collapseId">collapse</button>
+                            </div>
+                            <div class="collapse" id="collapseId">
+                                
+                                <h6>{ticket.Description}</h6>
+                            
+                            </div>
                         </div>
                         <div className="ticket-content">
                             <h5>{ticket.Question}</h5>
