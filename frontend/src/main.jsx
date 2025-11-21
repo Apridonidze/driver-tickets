@@ -2,11 +2,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { CookiesProvider } from 'react-cookie'
 import { RouterProvider, createBrowserRouter  } from 'react-router-dom'
-import App from './App'
+import Main from './container/Main'
 
 const router = createBrowserRouter([
-  {path : '/'  , element : <App />},
-  
+  {path : '/'  , element : <Main />},
+
 ])
 
 createRoot(document.getElementById('root')).render(
