@@ -80,6 +80,18 @@ const Exam = () => {
                         </div>
                     </div> }
             </div>
+
+            <div className="buttons row">
+                <div className="buttons-start col">
+                    <button>Save</button>
+                </div>
+                
+                <div className="buttons-end col">
+                        
+                    <button onClick={() => setTargetId(prev => prev + 1)}>Next</button>
+                    <button onClick={() => setTargetId(prev => prev - 1)}>Prev</button>
+                </div>
+            </div>
             
         </div>
     )
