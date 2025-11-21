@@ -150,9 +150,19 @@ const Exam = () => {
         <div className="exam-container container">
             <Header />
 
+            <div className="exam-count">
+                <div className="count-start">
+                    <h5>{correct}</h5>
+                    <h5>{incorrect}</h5>
+                </div>
+                <div className="count-end">
+                    <h5>{count}</h5>
+                </div>
+                
+            </div>
+
             <div className="exam-body">
-                {correct}
-                {incorrect}
+                
                 <h1>reset</h1>
                 {isLoaded && 
                     <div className="ticket">
