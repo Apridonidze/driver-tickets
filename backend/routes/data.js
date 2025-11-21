@@ -16,11 +16,11 @@ dataRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets'
 dataRoute.get('/', async (req,res) => {
     try {
 
-        const data = tickets.map(t => ({
-        ...t,
-        QuestionAudio: `http://localhost:8080/data/audio/${t.QuestionAudio}`,
-        DescriptionAudio: `http://localhost:8080/data/audio/${t.DescriptionAudio}`,
-        Image : `http://localhost:8080/data/tickets/${t.Image}`
+        const data = tickets.map(ticket => ({
+        ...ticket,
+        QuestionAudio: `http://localhost:8080/data/audio/${ticket.QuestionAudio}`,
+        DescriptionAudio: `http://localhost:8080/data/audio/${ticket.DescriptionAudio}`,
+        Image : `http://localhost:8080/data/tickets/${ticket.Image}`
     }));
 
     return res.status(200).json(data);
