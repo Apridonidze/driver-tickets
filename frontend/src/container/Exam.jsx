@@ -6,7 +6,7 @@ import { useState } from 'react'
 const Exam = () => {
 
     const [data ,setData] = useState()
-    const [targetId , setTargetId] = useState(0)
+    const [targetId , setTargetId] = useState(1082)
     const [ticket , setTicket] = useState()
     const [img , setImg] = useState()
     const [questionAudio, setQuestionAudio] = useState()
@@ -88,8 +88,9 @@ const Exam = () => {
                 
                 <div className="buttons-end col">
                         
-                    <button onClick={() => setTargetId(prev => prev + 1)}>Next</button>
-                    <button onClick={() => setTargetId(prev => prev - 1)}>Prev</button>
+                    <button onClick={() => setTargetId(prev => (prev - 1  < 0  ? prev : prev - 1))}>Prev</button>
+                    <button onClick={() => setTargetId(prev => (prev + 1 > data.length - 1 ? prev : prev + 1))}>Next</button>
+
                 </div>
             </div>
             
