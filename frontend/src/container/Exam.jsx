@@ -51,7 +51,7 @@ const Exam = () => {
 
                 if(data){
 
-                    setTicket(data[targetId])
+                    setTicket(data[targetId]) //get last answered question from db and set into state || if there is not any data in db then set to 0
                     setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
                     setQuestionAudio(data[targetId].QuestionAudio)
                     setAnswers(data[targetId].Answers) //send to db to save
@@ -151,7 +151,7 @@ const Exam = () => {
         setIncorrect(0)
         setTargetId(0)
         setAnsweredTicket()
-        setIsAnswered()
+        setIsAnswered() //send delete request to server to reset all stats
     }
 
     
