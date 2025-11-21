@@ -145,6 +145,15 @@ const Exam = () => {
     console.log(saved) //send saved to database
     },[saved])
 
+
+    const handleReset = () => {
+        setCorrect(0)
+        setIncorrect(0)
+        setTargetId(0)
+        setAnsweredTicket()
+        setIsAnswered()
+    }
+
     
     return(
         <div className="exam-container container">
@@ -157,13 +166,13 @@ const Exam = () => {
                 </div>
                 <div className="count-end">
                     <h5>{count}</h5>
+                    <h5 onClick={handleReset}>reset</h5>
                 </div>
                 
             </div>
 
             <div className="exam-body">
                 
-                <h1>reset</h1>
                 {isLoaded && 
                     <div className="ticket">
                         <div className="ticket-img">
