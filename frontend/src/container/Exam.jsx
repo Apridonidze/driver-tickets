@@ -16,6 +16,7 @@ const Exam = () => {
 
 
     const questionAudioRef = useRef(null)
+    const btnRef = useRef(null)
 
     useEffect(() => {
 
@@ -68,6 +69,12 @@ const Exam = () => {
 
     },[questionAudio , questionAudioRef])
 
+
+    const handleAnswers = (answer) => {
+        if(answer === true) alert('correct')
+        else alert('false')
+    }
+
     
     return(
         <div className="exam-container container">
@@ -86,7 +93,7 @@ const Exam = () => {
                             <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
                         <div className="ticket-answers">
-                            {answers.map((answer , answerId) => <button key={answerId}>{answer.Text}</button>)}
+                            {answers.map((answer , answerId) => <button key={answerId} onClick={() => handleAnswers(answer.IsCorrect)}>{answer.Text}</button>)}
                         </div>
                     </div> }
             </div>
