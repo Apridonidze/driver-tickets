@@ -6,7 +6,12 @@ import { useState } from 'react'
 const Exam = () => {
 
     const [data ,setData] = useState()
-    const [ticketId, setTicketId] = useState(0)
+    const [targetId , setTargetId] = useState(0)
+    const [ticket , setTicket] = useState()
+    const [img , setImg] = useState()
+    const [questionAudio, setQuestionAudio] = useState()
+    const [explanationAudio, setExplanationAudio] = useState()
+    const [answers , setAnswers] = useState()
 
     useEffect(() => {
 
@@ -26,18 +31,38 @@ const Exam = () => {
 
     },[])
 
-    console.log(data && data)
-    const audio = data?.[ticketId]?.QuestionAudio;
-    const img = data?.[ticketId]?.Image;
 
+    useEffect(() => {
+
+        const targetTicket = async () => {
+
+            try{
+
+                if(data){
+
+                    setTicket(data[targetId])
+                    setImg(data[targetId].Image)
+                    setQuestionAudio(data[targetId].QuestionAudio)
+                    setAnswers(data[targetId].Answers)
+
+                }
+
+                return 
+
+            }catch(err){
+                console.log(err)
+            }
+
+        }
+
+        targetTicket();
+
+    },[data, targetId])
 
     return(
         <div className="exam-container container">
             <Header />
-            exam
-            {img && <img src={img} />}
-            {audio && <audio controls autoPlay><source src={audio} type='audio/mpeg' /></audio>}
-            <button onClick={() => setTicketId(prev => prev + 1)}></button>
+            
         </div>
     )
 }
