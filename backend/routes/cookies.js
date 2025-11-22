@@ -7,7 +7,8 @@ const { v4: uuidv4 } = require("uuid");
 cookiesProvider.get('/', (req, res) => {
 
     try{
-            
+
+        
         const payload = {userId : uuidv4()}
 
         const token = jwt.sign(payload , 'secret_key' , {expiresIn : '30d'})
