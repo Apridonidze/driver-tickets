@@ -269,7 +269,7 @@ const Exam = () => {
 
             <div className="buttons row">
                 <div className="buttons-start col">
-                    <button onClick={() => setSaved(prev => [...prev, {id : targetId}])}>Save</button>
+                    <button onClick={() => setSaved(prev => [...prev.filter(p => p.id !== targetId), {id : targetId}])}>Save</button>
                 </div>
                 
                 <div className="buttons-end col">
