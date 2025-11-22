@@ -125,10 +125,11 @@ const Exam = () => {
             setTimeout(() => {
                 if(btnRef && btnRef.current){
 
-                    setTargetId(prev => prev + 1)
-                    btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                     
+                    btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+                    setTargetId(prev => prev + 1)
                     setToggleDescAudio(false)
+
                 } else return
             }, 1000)
             
@@ -158,12 +159,15 @@ const Exam = () => {
                if(d === '+'){
             setTargetId(prev => (prev + 1 > data.length - 1 ? prev : prev + 1))
             setToggleDescAudio(false)
-            btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+              btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+                   
         }else {
 
             setTargetId(prev => (prev - 1  < 0  ? prev : prev - 1))
             setToggleDescAudio(false)
-            btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+
+             btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+                   
         }
         }else {
             return
