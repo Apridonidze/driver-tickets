@@ -3,10 +3,11 @@ import { useEffect, useRef } from "react"
 import Header from "../component/Header"
 import { useState } from 'react'
 
+import { useCookies } from 'react-cookie'
 
 const Exam = () => {
 
-    
+    const [cookies] = useCookies(['token'])
 
     const [data ,setData] = useState()
     const [targetId , setTargetId] = useState(0)
@@ -28,6 +29,8 @@ const Exam = () => {
 
     const [answeredTicket , setAnsweredTicket] = useState([])
     const [isAnswered , setIsAnswered] = useState(null)
+
+    const [toggleDescAudio , setToggleDescAudio] = useState(false)
 
     useEffect(() => {
 
@@ -81,21 +84,16 @@ const Exam = () => {
 
     },[questionAudio , questionAudioRef])
 
-    const handleDescription = () => {
-        if(explanationAudioRef && explanationAudioRef.current && questionAudioRef && questionAudioRef.current){
-           if(isLoaded){
-                questionAudioRef.current.stop()
-                explanationAudioRef.current.play()
-           }else{
-
-               return
-           }
-        }
-    }
-
     useEffect(() => {
-        handleDescription() //fix
-    },[explanationAudio, explanationAudioRef])
+
+        if(toggleDescAudio){
+            console.log(toggleDescAudio)
+        }
+
+        console.log(toggleDescAudio)
+        
+
+    },[toggleDescAudio , explanationAudioRef , questionAudioRef])
 
 
 
@@ -123,6 +121,8 @@ const Exam = () => {
             setTimeout(() => {
                 setTargetId(prev => prev + 1)
                 btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+                
+                setToggleDescAudio(false)
             }, 1000)
             
         }
@@ -202,7 +202,7 @@ const Exam = () => {
                         </div>
                         <div className="ticket-desc ">
                             <div className="desc-top">
-                                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseId" aria-expanded="false" aria-controls="collapseId" onClick={handleDescription}>collapse</button>
+                                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseId" aria-expanded='false' aria-controls="collapseId" onClick={() => setToggleDescAudio(!toggleDescAudio)}>collapse</button>
                             </div>
                             <div class="collapse" id="collapseId">
                                 
