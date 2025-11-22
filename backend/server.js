@@ -6,6 +6,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser');
 const cookiesProvider = require('./routes/cookies');
 const savedRoute = require('./routes/saved');
+const ticketRoute = require('./routes/tickets');
 
 app.use(cors()) //add cors option
 app.use(bodyParser.json())
@@ -16,5 +17,7 @@ const PORT = 8080 ; //move to env
 
 app.use('/data' , dataRoute);
 app.use('/cookies' , cookiesProvider);
+app.use('/saved' , savedRoute)
+app.use('/tickets', ticketRoute)
 
 app.listen(PORT , () => {console.log(`http://localhost:${PORT}`)} )

@@ -173,6 +173,10 @@ const Exam = () => {
     console.log(saved) //send saved to database
     },[saved])
 
+    useEffect(() => {
+        console.log(answeredTicket)
+    },[answeredTicket])
+
 
     const handleReset = () => {
         setCorrect(0)
