@@ -174,7 +174,20 @@ const Exam = () => {
     },[saved])
 
     useEffect(() => {
-        console.log(answeredTicket)
+
+        const postAnsweredTickets = async () => {
+            
+            try{
+                console.log(answeredTicket)
+                await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicket} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+            }catch(err){
+                console.log('internal error')
+            }
+        }
+
+        postAnsweredTickets()
+
     },[answeredTicket])
 
 
