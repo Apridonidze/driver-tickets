@@ -123,10 +123,13 @@ const Exam = () => {
             }
 
             setTimeout(() => {
-                setTargetId(prev => prev + 1)
-                btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
-                
-                setToggleDescAudio(false)
+                if(btnRef && btnRef.current){
+
+                    setTargetId(prev => prev + 1)
+                    btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+                    
+                    setToggleDescAudio(false)
+                } else return
             }, 1000)
             
         }
