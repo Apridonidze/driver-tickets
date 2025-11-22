@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 
 import { useCookies } from 'react-cookie'
 import { useEffect } from "react"
+import axios from "axios"
 
 
 const Main = () => {
@@ -12,10 +13,10 @@ const Main = () => {
 
         const handleCookies = () => {
 
-            if(cookies.token){
-                console.log('cookies' + cookies.token)
+            if(!cookies.token){
+                axios.get('http://localhost:8080/cookies').then(resp => setCookies(['token'] , resp.data.token))
             }else {
-                console.log('no cookies provided' + cookies.token)
+                return
             }
 
         }
@@ -23,6 +24,8 @@ const Main = () => {
         handleCookies()
 
     },[cookies])
+
+
 
     return(
         <div className="main-container">
