@@ -177,7 +177,20 @@ const Exam = () => {
 
     useEffect(() => {
         
-    console.log(saved) //send saved to database
+        const handleSave = async() => {
+
+            try{
+                
+                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {saved} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+            }catch(err){
+                console.log(err)
+            }
+
+        }
+
+        handleSave()
+
     },[saved])
 
     useEffect(() => {
