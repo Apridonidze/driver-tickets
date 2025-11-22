@@ -16,6 +16,5 @@ const PORT = 8080 ; //move to env
 
 app.use('/data' , dataRoute);
 app.use('/cookies' , cookiesProvider);
-app.use('/saved' , savedRoute)
 
 app.listen(PORT , () => {console.log(`http://localhost:${PORT}`)} )

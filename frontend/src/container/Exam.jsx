@@ -61,6 +61,7 @@ const Exam = () => {
                     setTicket(data[targetId]) //get last answered question from db and set into state || if there is not any data in db then set to 0
                     setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
                     setQuestionAudio(data[targetId].QuestionAudio)
+                    setExplanationAudio(data[targetId].DescriptionAudio)
                     setAnswers(data[targetId].Answers) //send to db to save
                     setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) //after fetcihn answers filters it and set in state
                     setIsLoaded(true)
@@ -87,11 +88,16 @@ const Exam = () => {
     useEffect(() => {
 
         if(toggleDescAudio){
-            console.log(toggleDescAudio)
-        }
 
-        console.log(toggleDescAudio)
-        
+            if(explanationAudioRef && explanationAudioRef.current && questionAudioRef && questionAudioRef.current){
+                questionAudioRef.current.pause()
+                explanationAudioRef.current.play()
+            }
+
+        }else {
+                questionAudioRef.current.play()
+                explanationAudioRef.current.pause()
+        }        
 
     },[toggleDescAudio , explanationAudioRef , questionAudioRef])
 
@@ -150,10 +156,12 @@ const Exam = () => {
         if(btnRef && btnRef.current){
                if(d === '+'){
             setTargetId(prev => (prev + 1 > data.length - 1 ? prev : prev + 1))
+            setToggleDescAudio(false)
             btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
         }else {
 
             setTargetId(prev => (prev - 1  < 0  ? prev : prev - 1))
+            setToggleDescAudio(false)
             btnRef.current.forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
         }
         }else {
@@ -175,7 +183,6 @@ const Exam = () => {
         setAnsweredTicket()
         setIsAnswered() //send delete request to server to reset all stats
     }
-
     
     return(
         <div className="exam-container container">
