@@ -6,7 +6,7 @@ savedRoute.get('/saved-tickets', (req,res) => {
 })
 
 savedRoute.post('/post-saved-tickets', (req,res) => {
-    console.log(req)
+    console.log(req.body)
 })
 
 
