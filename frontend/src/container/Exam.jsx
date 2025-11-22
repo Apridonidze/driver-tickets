@@ -3,7 +3,10 @@ import { useEffect, useRef } from "react"
 import Header from "../component/Header"
 import { useState } from 'react'
 
+
 const Exam = () => {
+
+    
 
     const [data ,setData] = useState()
     const [targetId , setTargetId] = useState(0)
@@ -91,8 +94,11 @@ const Exam = () => {
     }
 
     useEffect(() => {
-        handleDescription()
+        handleDescription() //fix
     },[explanationAudio, explanationAudioRef])
+
+
+
 
     const handleAnswers = (answer) => {
 
