@@ -1,26 +1,29 @@
 const jwt = require('jsonwebtoken')
 
-function verifyToken (req,res,next) {
-    const authHeaders = req.headers
+async function  verifyToken (req,res,next) {
+    
 
-    if(authHeaders && authHeaders.authorization){
+    const authHeaders = req.headers['authorization']
+
+    if(!authHeaders){ return res.status(400).json('No Headers Provided') }
+
+            
+    const userToken = authHeaders.split(' ')[1]
         
-        const auth = authHeaders.authorization.split(' ')[1]
+    try{
 
-        if(auth){
+        
+        const token = jwt.verify(userToken, 'secret_key')
 
-            const token = jwt.verify(auth , 'secret_key')
-
-            req.user = token.userId
-
-
-        }
-
+        req.user = token.userId
 
         next()
-    }else {
-        
+
+
+    }catch(err){
+        return res.status(401).json('invalid token')
     }
+
 }
 
 
