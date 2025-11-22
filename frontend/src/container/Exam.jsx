@@ -87,22 +87,20 @@ const Exam = () => {
 
     useEffect(() => {
 
-        if(toggleDescAudio){
+        if(explanationAudioRef && explanationAudioRef.current && questionAudioRef && questionAudioRef.current){
+            
+            if(toggleDescAudio){
 
-            if(explanationAudioRef && explanationAudioRef.current && questionAudioRef && questionAudioRef.current){
-                questionAudioRef.current.pause()
+               questionAudioRef.current.pause()
                 explanationAudioRef.current.play()
-            }
-
-        }else {
+            }else {
                 questionAudioRef.current.play()
                 explanationAudioRef.current.pause()
-        }        
+        }
+
+        }        return
 
     },[toggleDescAudio , explanationAudioRef , questionAudioRef])
-
-
-
 
     const handleAnswers = (answer) => {
 
