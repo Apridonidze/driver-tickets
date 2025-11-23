@@ -9,7 +9,7 @@ ticketRoute.get('/answered-tickets' , verifyToken , async (req,res) => {
 
         const userId = req.user
 
-        const [ answeredTickets ] = await db.query('select * from answeredtickets where user_id = ?',[userId])
+        const [ answeredTickets ] = await db.query('select ticketId, answerId, correctId from answeredtickets where user_id = ?',[userId])
 
         if(answeredTickets.length === 0) return res.status(200).json([])
 

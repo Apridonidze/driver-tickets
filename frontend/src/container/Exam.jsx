@@ -32,6 +32,34 @@ const Exam = () => {
 
     const [toggleDescAudio , setToggleDescAudio] = useState(false)
 
+
+      useEffect(() => {
+        const fetchAnswered = async () => {
+
+            try{
+
+                await axios.get('http://localhost:8080/tickets/answered-tickets' , {headers : {Authorization  : `Bearer ${cookies.token}`}})
+                .then(resp => {
+                    const data = resp.data
+
+                    setAnsweredTicket(data)
+                    
+                    setTargetId(data[data.length - 1].ticketId + 1) 
+                    
+                })
+
+            }catch(err){
+                console.log('err')
+            }
+
+        }
+
+        fetchAnswered()
+
+    },[])
+
+
+
     useEffect(() => {
 
         const  fetchExams = async () => {
@@ -51,12 +79,13 @@ const Exam = () => {
     },[])
 
 
+
     useEffect(() => {
 
         const targetTicket =  () => {
 
 
-                if(data){
+                if(data ){
 
                     setTicket(data[targetId]) //get last answered question from db and set into state || if there is not any data in db then set to 0
                     setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
@@ -66,7 +95,8 @@ const Exam = () => {
                     setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) //after fetcihn answers filters it and set in state
                     setIsLoaded(true)
 
-                }
+                } 
+
 
                 return 
 
@@ -74,7 +104,9 @@ const Exam = () => {
 
         targetTicket();
 
-    },[data, targetId])
+    },[targetId])
+
+  
 
 
     useEffect(() => {
@@ -102,7 +134,7 @@ const Exam = () => {
 
     },[toggleDescAudio , explanationAudioRef , questionAudioRef])
 
-    const handleAnswers = (answer) => {
+    const handleAnswers = async (answer) => {
 
         
         if(btnRef && btnRef.current){
@@ -122,6 +154,19 @@ const Exam = () => {
                 setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}])
             }
 
+             let answeredTicketLast = answeredTicket[answeredTicket.length - 1]
+
+                if(answeredTicketLast){
+                    try{
+               
+                    
+                    await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+                }catch(err){
+                console.log('internal error')
+            }
+                }
+
             setTimeout(() => {
                 if(btnRef && btnRef.current){
 
@@ -136,35 +181,26 @@ const Exam = () => {
         }
     }
 
-    useEffect(() => {
-        if(isAnswered && isAnswered[0]){  //get from database isAnswered variable
-            if(btnRef && btnRef.current){
-                
-                if(isAnswered[0].correctId === isAnswered[0].answerId){
-                    
-                    btnRef.current[isAnswered[0].correctId].classList.add('btn-success')
-                }else {
-                    btnRef.current[isAnswered[0].answerId].classList.add('btn-danger')
-                    btnRef.current[isAnswered[0].correctId].classList.add('btn-success')
-                }
 
-            }
-        }else {
-            return
-        }
+
+    useEffect(() => {
+
+
     },[isAnswered])
+    
+
 
     const handleAnswerButton = (d) => {
         if(btnRef && btnRef.current){
                if(d === '+'){
-            setTargetId(prev => (prev + 1 > data.length - 1 ? prev : prev + 1))
-            setToggleDescAudio(false)
+                setToggleDescAudio(false)
+                setTargetId(prev => prev + 1)
               btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                    
         }else {
-
-            setTargetId(prev => (prev - 1  < 0  ? prev : prev - 1))
+            //add prev page
             setToggleDescAudio(false)
+                setTargetId(prev => prev - 1)
 
              btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                    
@@ -179,7 +215,6 @@ const Exam = () => {
         
         const handleSave = async() => {
 
-            console.log(saved)
 
             try{
                 
@@ -195,32 +230,7 @@ const Exam = () => {
 
     },[saved])
 
-    useEffect(() => {
-
-        const postAnsweredTickets = async () => {
-            
-            try{
-                let answeredTicketLast = answeredTicket[answeredTicket.length - 1]
-
-                if(answeredTicketLast){
-                    
-                    await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
-
-                }
-
-                else return 
-
-                
-
-
-            }catch(err){
-                console.log('internal error')
-            }
-        }
-
-        postAnsweredTickets()
-
-    },[answeredTicket])
+  
 
 
     const handleReset = () => {
@@ -232,24 +242,6 @@ const Exam = () => {
     }
 
 
-    useEffect(() => {
-        const fetchAnswered = async () => {
-
-            try{
-
-                await axios.get('http://localhost:8080/tickets/answered-tickets' , {headers : {Authorization  : `Bearer ${cookies.token}`}})
-                .then(resp => console.log(resp))
-
-            }catch(err){
-                console.log('err')
-            }
-
-        }
-
-        fetchAnswered()
-
-    },[])
-    
     return(
         <div className="exam-container container">
             <Header />
@@ -289,7 +281,7 @@ const Exam = () => {
                             <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
                         <div className="ticket-answers">
-                            {isAnswered && !isAnswered[0]? 
+                            {isAnswered.length !== 0 ? 
                             answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answerId} {answer.Text}</button>) 
                             : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
                         </div>
