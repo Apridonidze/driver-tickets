@@ -43,9 +43,9 @@ const Exam = () => {
                     const data = resp.data
 
                     setAnsweredTicket(data)
-                    
                     setTargetId(data[data.length - 1].ticketId + 2) 
-                    
+                    setCorrect(data.filter(ticket => ticket.answerId === ticket.correctId).length)
+                    setIncorrect(data.filter(ticket => ticket.answerId !== ticket.correctId).length)
                 })
 
             }catch(err){
@@ -200,7 +200,7 @@ const Exam = () => {
             }else return
             
         }
-    },[isAnswered])
+    },[isAnswered , targetId])
     
 
 
