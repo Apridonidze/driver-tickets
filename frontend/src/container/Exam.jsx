@@ -201,7 +201,12 @@ const Exam = () => {
             
             try{
                 let answeredTicketLast = answeredTicket[answeredTicket.length - 1]
-                await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+                if(answeredTicketLast !== undefined ){
+                    await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+                }else return
+
 
             }catch(err){
                 console.log('internal error')
