@@ -16,7 +16,7 @@ const Main = () => {
             if(!cookies.token){
                 axios.get('http://localhost:8080/cookies').then(resp => setCookies(['token'] , resp.data.token))
             }else {
-                return
+                return //else validate token , if token is not provided clear setCookies state and useEffect will automatically handle user who does not  have token by gettin ne wone from above request
             }
 
         }

@@ -200,8 +200,8 @@ const Exam = () => {
         const postAnsweredTickets = async () => {
             
             try{
-                console.log(answeredTicket)
-                await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicket} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                let answeredTicketLast = answeredTicket[answeredTicket.length - 1]
+                await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
             }catch(err){
                 console.log('internal error')
@@ -220,6 +220,25 @@ const Exam = () => {
         setAnsweredTicket()
         setIsAnswered() //send delete request to server to reset all stats
     }
+
+
+    useEffect(() => {
+        const fetchAnswered = async () => {
+
+            try{
+
+                await axios.get('http://localhost:8080/tickets/answered-tickets' , {headers : {Authorization  : `Bearer ${cookies.token}`}})
+                .then(resp => console.log(resp))
+
+            }catch(err){
+                console.log('err')
+            }
+
+        }
+
+        fetchAnswered()
+
+    },[])
     
     return(
         <div className="exam-container container">

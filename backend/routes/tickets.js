@@ -3,7 +3,15 @@ const verifyToken = require('../config/verifyToken')
 const ticketRoute = express.Router()
 const db = require('../db/db')
 
-ticketRoute.get('/answered-tickets' , (req,res) => {
+ticketRoute.get('/answered-tickets' , verifyToken , async (req,res) => {
+    
+    try{
+
+        return res.status(200).json(req.user) 
+
+    }catch(err){
+        return res.status(500).json('internal error')
+    }
     
 })
 
@@ -22,7 +30,7 @@ ticketRoute.post('/post-answered-tickets' , verifyToken, async (req,res) => {
         
 
     }catch(err){
-        return res.status(500).json('interval error')
+        return res.status(500).json('internal error')
     }
 
 })
