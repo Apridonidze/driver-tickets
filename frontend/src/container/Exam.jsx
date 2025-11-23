@@ -21,6 +21,7 @@ const Exam = () => {
 
     const explanationAudioRef = useRef(null)
     const questionAudioRef = useRef(null)
+    const collapseRef = useRef(null)
     const btnRef = useRef([])
 
     const [count ,setCount] = useState(0)
@@ -46,6 +47,7 @@ const Exam = () => {
                     setTargetId(data[data.length - 1].ticketId + 2) 
                     setCorrect(data.filter(ticket => ticket.answerId === ticket.correctId).length)
                     setIncorrect(data.filter(ticket => ticket.answerId !== ticket.correctId).length)
+                    
                 })
 
             }catch(err){
@@ -168,8 +170,7 @@ const Exam = () => {
                 }
 
             setTimeout(() => {
-                if(btnRef && btnRef.current){
-
+                if(btnRef && btnRef.current && collapseRef && collapseRef.current){
                     
                     btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                     setTargetId(prev => prev + 1)
@@ -200,10 +201,9 @@ const Exam = () => {
             }else return
             
         }
-    },[isAnswered , targetId])
+    },[isAnswered ])
+
     
-
-
     const handleAnswerButton = (d) => {
         if(btnRef && btnRef.current){
                if(d === '+'){
@@ -214,9 +214,9 @@ const Exam = () => {
         }else {
             //add prev page
             setToggleDescAudio(false)
-                setTargetId(prev => prev - 1)
+            setTargetId(prev => prev - 1)
 
-             btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
+            btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                    
         }
         }else {
@@ -244,7 +244,6 @@ const Exam = () => {
 
     },[saved])
 
-  
 
 
     const handleReset = () => {
@@ -254,6 +253,17 @@ const Exam = () => {
         setAnsweredTicket()
         setIsAnswered() //send delete request to server to reset all stats
     }
+
+    useEffect(() => {
+
+        if(collapseRef && collapseRef.current){
+            toggleDescAudio ? (collapseRef.current.classList.remove('collapse')) : collapseRef.current.classList.add('collapse')
+
+        }
+
+        return
+
+    },[toggleDescAudio])
 
 
     return(
@@ -281,9 +291,9 @@ const Exam = () => {
                         </div>
                         <div className="ticket-desc ">
                             <div className="desc-top">
-                                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseId" aria-expanded='false' aria-controls="collapseId" onClick={() => setToggleDescAudio(!toggleDescAudio)}>collapse</button>
+                                <button type="button" onClick={() => setToggleDescAudio(prev => !prev)} >collapse</button>
                             </div>
-                            <div class="collapse" id="collapseId">
+                            <div class="" ref={collapseRef}>
                                 
                                 <h6>{ticket.Description}</h6>
                                 <audio ref={explanationAudioRef} src={explanationAudio}></audio>
