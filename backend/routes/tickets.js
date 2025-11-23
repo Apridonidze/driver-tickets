@@ -10,9 +10,11 @@ ticketRoute.get('/answered-tickets' , verifyToken , async (req,res) => {
         const userId = req.user
 
         const [ answeredTickets ] = await db.query('select * from answeredtickets where user_id = ?',[userId])
-        
-        return res.status(200).json(req.user)
 
+        if(answeredTickets.length === 0) return res.status(200).json([])
+
+        return res.status(200).json(answeredTickets)
+        
     }catch(err){
         return res.status(500).json('internal error')
     }
@@ -25,6 +27,8 @@ ticketRoute.post('/post-answered-tickets' , verifyToken, async (req,res) => {
     try{
         
         let data = {userId : req.user , answeredTicket : req.body.answeredTicketLast}
+
+        //check if user already answered ticket and return resp
 
         await db.query('insert into answeredTickets (user_id, ticketId, answerId, correctId) values ( ? , ? , ? , ? )' , [data.userId ,data.answeredTicket.ticketId , data.answeredTicket.answerId , data.answeredTicket.correctId])
         

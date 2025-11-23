@@ -202,10 +202,15 @@ const Exam = () => {
             try{
                 let answeredTicketLast = answeredTicket[answeredTicket.length - 1]
 
-                if(answeredTicketLast !== undefined ){
+                if(answeredTicketLast){
+                    
                     await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
-                }else return
+                }
+
+                else return 
+
+                
 
 
             }catch(err){
