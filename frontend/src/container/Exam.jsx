@@ -44,7 +44,7 @@ const Exam = () => {
 
                     setAnsweredTicket(data)
                     
-                    setTargetId(data[data.length - 1].ticketId + 1) 
+                    setTargetId(data[data.length - 1].ticketId + 2) 
                     
                 })
 
@@ -185,7 +185,21 @@ const Exam = () => {
 
     useEffect(() => {
 
+        if(btnRef && btnRef.current){
+        
+             if(isAnswered && isAnswered.length !== 0){
+                const ticket = isAnswered[0]
 
+                if(ticket.answerId === ticket.correctId){
+                    btnRef.current[ticket.correctId].classList.add('btn-success')
+                }else {
+                    btnRef.current[ticket.correctId].classList.add('btn-success')
+                    btnRef.current[ticket.answerId].classList.add('btn-danger')
+                }
+            
+            }else return
+            
+        }
     },[isAnswered])
     
 
@@ -281,7 +295,7 @@ const Exam = () => {
                             <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
                         <div className="ticket-answers">
-                            {isAnswered.length !== 0 ? 
+                            {isAnswered.length === 0 ? 
                             answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answerId} {answer.Text}</button>) 
                             : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
                         </div>
