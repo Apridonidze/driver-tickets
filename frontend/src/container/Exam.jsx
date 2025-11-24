@@ -245,11 +245,7 @@ const Exam = () => {
     },[saved])
 
     const handleReset = () => {
-        setCorrect(0)
-        setIncorrect(0)
-        setTargetId(0)
-        setAnsweredTicket()
-        setIsAnswered() //send delete request to server to reset all stats
+        //handle reset
     }
 
     useEffect(() => {

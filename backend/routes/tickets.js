@@ -28,7 +28,10 @@ ticketRoute.post('/post-answered-tickets' , verifyToken, async (req,res) => {
         
         let data = {userId : req.user , answeredTicket : req.body.answeredTicketLast}
 
-        //check if user already answered ticket and return resp
+        
+        const [ isAlreadyInserted ] = await db.query('select * from answeredtickets where ticketId = ? and user_id = ?' , [data.answeredTicket.ticketId , data.userId])
+
+        if(isAlreadyInserted.length > 0) return res.status(400).json('Ticket Already Inserted')
 
         await db.query('insert into answeredTickets (user_id, ticketId, answerId, correctId) values ( ? , ? , ? , ? )' , [data.userId ,data.answeredTicket.ticketId , data.answeredTicket.answerId , data.answeredTicket.correctId])
         
