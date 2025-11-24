@@ -69,9 +69,15 @@ const Favorite = () => {
                     <div className="ticket-img">
                         {img ? <img src={img} /> : <h1>img</h1>}
                     </div>
-                    <div className="ticket-desc"></div>
-                    <div className="ticket-title"></div>
-                    <div className="ticket-buttons"></div>
+                    <div className="ticket-desc">
+                        {ticket.Description}
+                    </div>
+                    <div className="ticket-title">
+                        {ticket.Question}
+                    </div>
+                    <div className="ticket-buttons">
+                        {ticket.Answers[0].Text}
+                    </div>
                     <div className="ticket-footer-buttons"></div>
                 </div> }
             </div>
