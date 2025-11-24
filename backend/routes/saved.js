@@ -4,7 +4,20 @@ const savedRoute = express.Router()
 
 const db = require('../db/db')
 
-savedRoute.get('/saved-tickets', verifyToken ,(req,res) => {
+savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {
+
+    try{
+
+        const [ savedTickets ] = await db.query('select * from savedtickets where user_id = ?' , [req.user])
+
+        if(savedTickets.length === 0) return res.status(200).json([])
+        
+        return res.status(200).json(savedTickets)
+
+    }catch(err){
+        return res.status(500).json('internal error')
+    }
+
     
 })
 
@@ -22,6 +35,12 @@ savedRoute.post('/post-saved-tickets', verifyToken , async (req,res) => {
         return res.status(500).json('internal error')
     }
 
+})
+
+
+savedRoute.delete('/delete-saved-tickets' , verifyToken , async (req,res) => {
+    
+    const data = {ticketId : req.body.data , userId : req.user}
 })
 
 
