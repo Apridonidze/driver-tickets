@@ -72,8 +72,14 @@ const Favorite = () => {
     },[targetId , saved])
 
     
-
-
+    //create unsave async function 
+    //create answer handling function 
+    //create next ticketId generation function
+    //create btn styling remove function
+    //create collapse function
+    //create audio handling functions
+    //create reset function
+    //create isanswered function (do not relate to database)
 
     return(
         <div className="favorite-container">
@@ -100,7 +106,7 @@ const Favorite = () => {
                         </div>
                         <div className="ticket-answers">
                             {isAnswered.length === 0 ? 
-                            answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref}>{answerId} {answer.Text}</button>) 
+                            answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref}>{answerId} {answer.Text}</button>) /**add onclick function to answer question */
                             : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
                         </div>
                     </div> : <></>}
