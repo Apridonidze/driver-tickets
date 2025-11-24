@@ -19,12 +19,14 @@ const Favorite = () => {
     const [isAnswered, setIsAnswered] = useState([])
     const [answers ,setAnswers] = useState([])
 
+    const [answeredTicket , setAnsweredTicket] = useState([])
     const [correct, setCorrect] = useState(0)
     const [incorrect, setInorrect] = useState(0)
     const [count , setCount] = useState(0)
 
     const [isLoaded,setIsLoaded] = useState(false)
 
+    const btnRef = useRef(null)
     const collapseRef = useRef(null)
     const explanationAudioRef = useRef(null)
     const questionAudioRef  = useRef(null)
@@ -53,8 +55,12 @@ const Favorite = () => {
         const targetTicket = () => {
 
             if(saved){
-                setTicket(saved[targetId])
+                setTicket(saved[targetId]) 
                 setImg(saved[targetId].Image.slice(saved[targetId].Image.length - 4 , saved[targetId].Image.length) == '.jpg' ? saved[targetId].Image : false)
+                setQuestionAudio(saved[targetId].QuestionAudio)
+                setExplanationAudio(saved[targetId].DescriptionAudio)
+                setAnswers(saved[targetId].Answers)
+                setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) 
                 setIsLoaded(true)
             }
             
@@ -94,7 +100,7 @@ const Favorite = () => {
                         </div>
                         <div className="ticket-answers">
                             {isAnswered.length === 0 ? 
-                            answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answerId} {answer.Text}</button>) 
+                            answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref}>{answerId} {answer.Text}</button>) 
                             : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
                         </div>
                     </div> : <></>}
