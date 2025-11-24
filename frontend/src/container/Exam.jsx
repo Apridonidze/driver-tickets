@@ -10,7 +10,7 @@ const Exam = () => {
     const [cookies] = useCookies(['token'])
 
     const [data ,setData] = useState()
-    const [targetId , setTargetId] = useState(0)
+    const [targetId , setTargetId] = useState()
     const [ticket , setTicket] = useState()
     const [img , setImg] = useState()
     const [questionAudio, setQuestionAudio] = useState()
@@ -44,7 +44,7 @@ const Exam = () => {
                     const data = resp.data
 
                     setAnsweredTicket(data)
-                    setTargetId(data[data.length - 1].ticketId + 2) 
+                    setTargetId(data.length === 0 ? 0 : data[data.length - 1].ticketId + 2) 
                     setCorrect(data.filter(ticket => ticket.answerId === ticket.correctId).length)
                     setIncorrect(data.filter(ticket => ticket.answerId !== ticket.correctId).length)
                     
@@ -201,7 +201,7 @@ const Exam = () => {
             }else return
             
         }
-    },[isAnswered ])
+    },[isAnswered])
 
     
     const handleAnswerButton = (d) => {
@@ -243,8 +243,6 @@ const Exam = () => {
         handleSave()
 
     },[saved])
-
-
 
     const handleReset = () => {
         setCorrect(0)
@@ -293,7 +291,7 @@ const Exam = () => {
                             <div className="desc-top">
                                 <button type="button" onClick={() => setToggleDescAudio(prev => !prev)} >collapse</button>
                             </div>
-                            <div class="" ref={collapseRef}>
+                            <div class="collapse" ref={collapseRef}>
                                 
                                 <h6>{ticket.Description}</h6>
                                 <audio ref={explanationAudioRef} src={explanationAudio}></audio>
