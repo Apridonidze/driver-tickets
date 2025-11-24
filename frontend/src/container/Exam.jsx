@@ -243,7 +243,7 @@ const Exam = () => {
 
             try{
 
-                await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(false)})
+                await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(false))
 
             }catch(err){
                 console.log(err)
@@ -293,8 +293,6 @@ const Exam = () => {
         fetchIsSaved()
 
     },[isSaved , targetId])
-
-
 
 
     return(
