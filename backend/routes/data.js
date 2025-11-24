@@ -5,11 +5,7 @@ const path = require('path');
 const tickets = require('../data/tikets.json')
 
 
-const audioPath = path.join(__dirname , 'data' , 'audio'); 
-
-dataRoute.use(express.static(audioPath));
-
-
+dataRoute.use(express.static(path.join(__dirname , 'data' , 'audio')));
 dataRoute.use('/audio', express.static(path.join(__dirname, '../data/audio')));
 dataRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets')))
 
