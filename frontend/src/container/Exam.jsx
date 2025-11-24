@@ -10,7 +10,7 @@ const Exam = () => {
     const [cookies] = useCookies(['token'])
 
     const [data ,setData] = useState()
-    const [targetId , setTargetId] = useState()
+    const [targetId , setTargetId] = useState(0)
     const [ticket , setTicket] = useState()
     const [img , setImg] = useState()
     const [questionAudio, setQuestionAudio] = useState()
@@ -106,7 +106,7 @@ const Exam = () => {
 
         targetTicket();
 
-    },[targetId])
+    },[targetId , data])
 
   
 
@@ -248,7 +248,7 @@ const Exam = () => {
 
         try{
 
-            await axios.delete('http://localhost:8080/tickets/delete-answered-tickets' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+            await axios.delete('http://localhost:8080/tickets/delete-answered-tickets' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => window.location.reload())
 
         }catch(err){
             console.log(err)
@@ -286,7 +286,7 @@ const Exam = () => {
 
             <div className="exam-body">
                 
-                {isLoaded && 
+                {isLoaded ? 
                     <div className="ticket">
                         <div className="ticket-img">
                             {img === false ? <></> : <img src={img}/>}
@@ -311,7 +311,7 @@ const Exam = () => {
                             answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answerId} {answer.Text}</button>) 
                             : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
                         </div>
-                    </div> }
+                    </div> : <></>}
             </div>
 
             <div className="buttons row">

@@ -45,8 +45,17 @@ ticketRoute.post('/post-answered-tickets' , verifyToken, async (req,res) => {
 
 ticketRoute.delete('/delete-answered-tickets' , verifyToken , async(req,res) => {
 
+    const userId = req.user
 
-    console.log(req.user)
+    try{
+
+        await db.query('delete from answeredTickets where user_id = ?' , [userId])
+
+        return res.status(200).json('deleted')
+
+    }catch(err){
+        return res.status(500).json('internal error')
+    }
     
 
 })
