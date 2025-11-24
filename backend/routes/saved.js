@@ -21,6 +21,27 @@ savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {
     
 })
 
+
+savedRoute.get('/saved-tickets/:ticketId', verifyToken , async (req,res) => {
+
+    const data = {ticketId : req.params.ticketId , userId : req.user}
+
+    try{
+
+        const [ savedTickets ] = await db.query('select * from savedtickets where user_id = ? and ticket_id = ?' , [data.userId , data.ticketId])
+
+        if(savedTickets.length === 0) return res.status(200).json(false)
+        
+        return res.status(200).json(true)
+
+    }catch(err){
+        return res.status(500).json('internal error')
+    }
+
+    
+})
+
+
 savedRoute.post('/post-saved-tickets', verifyToken , async (req,res) => {
     
     const data = {ticketId : req.body.data , userId : req.user}
@@ -38,19 +59,18 @@ savedRoute.post('/post-saved-tickets', verifyToken , async (req,res) => {
 })
 
 
-savedRoute.delete('/delete-saved-tickets' , verifyToken , async (req,res) => {
+savedRoute.delete('/delete-saved-tickets/:ticketId' , verifyToken , async (req,res) => {
     
-    const data = {ticketId : req.body.data , userId : req.user}
-
+    
+    
+    
     try{
+        
+        const data = {ticketId : req.params.ticketId, userId : req.user}
 
-        const [checkSaved] = await db.query('select * from savedtickets where user_id = ? and ticket_id = ?' [data.userId , data.ticketId])
+        await db.query('delete from savedtickets where user_id = ? and  ticket_id = ?' , [data.userId , data.ticketId])
 
-        if(checkSaved.length === 0) return res.status(400).json('ticket not saved')
-
-        await db.query('delete from savedtickets where user_id = ? , ticket_id = ?' , [data.userId , data.ticketId])
-
-        return res.status(200).json('unsaved')
+        return res.status(200).json('Unsaved')
 
     }catch(err){
         return res.status(500).json('internal error')

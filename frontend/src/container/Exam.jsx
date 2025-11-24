@@ -16,6 +16,7 @@ const Exam = () => {
     const [questionAudio, setQuestionAudio] = useState()
     const [explanationAudio, setExplanationAudio] = useState()
     const [answers , setAnswers] = useState()
+    const [isSaved , setIsSaved] = useState()
     const [isLoaded,setIsLoaded] = useState(false)
 
     const explanationAudioRef = useRef(null)
@@ -86,7 +87,7 @@ const Exam = () => {
         const targetTicket =  () => {
 
 
-                if(data ){
+                if(data){
 
                     setTicket(data[targetId]) 
                     setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
@@ -229,13 +230,25 @@ const Exam = () => {
 
             try{
 
-                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(true))
 
             }catch(err){
                 console.log(err)
             }
 
             
+        }
+
+        const handleUnsave = async(id) => {
+
+            try{
+
+                await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(false)})
+
+            }catch(err){
+                console.log(err)
+            }
+
         }
 
 
@@ -261,6 +274,27 @@ const Exam = () => {
         return
 
     },[toggleDescAudio])
+
+
+    useEffect(() => {
+
+        const fetchIsSaved = async () => {
+
+            try{
+
+                await axios.get(`http://localhost:8080/saved/saved-tickets/${targetId + 1}` , {headers : {Authorization  : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(resp.data))
+
+            }catch(err){
+                console.log(err)
+            }
+
+        }
+
+        fetchIsSaved()
+
+    },[isSaved , targetId])
+
+
 
 
     return(
@@ -311,7 +345,8 @@ const Exam = () => {
 
             <div className="buttons row">
                 <div className="buttons-start col">
-                    <button onClick={() => handleSave(ticket.Id)}>Save</button>
+                    {isSaved ? <button onClick={() => handleUnsave(ticket.Id)}>Save</button> : 
+                    <button onClick={() => handleSave(ticket.Id)}>Save</button>}
                 </div>
                 
                 <div className="buttons-end col">
