@@ -244,8 +244,16 @@ const Exam = () => {
 
     },[saved])
 
-    const handleReset = () => {
-        //handle reset
+    const handleReset = async () => {
+
+        try{
+
+            await axios.delete('http://localhost:8080/tickets/delete-answered-tickets' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+        }catch(err){
+            console.log(err)
+        }
+
     }
 
     useEffect(() => {

@@ -45,11 +45,9 @@ ticketRoute.post('/post-answered-tickets' , verifyToken, async (req,res) => {
 
 ticketRoute.delete('/delete-answered-tickets' , verifyToken , async(req,res) => {
 
-    try{
 
-    }catch(err){
-        return res.status(500).json('internal error')
-    }
+    console.log(req.user)
+    
 
 })
 
