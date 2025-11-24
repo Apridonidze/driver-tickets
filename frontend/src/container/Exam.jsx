@@ -17,7 +17,6 @@ const Exam = () => {
     const [explanationAudio, setExplanationAudio] = useState()
     const [answers , setAnswers] = useState()
     const [isLoaded,setIsLoaded] = useState(false)
-    const [saved,setSaved] = useState([])
 
     const explanationAudioRef = useRef(null)
     const questionAudioRef = useRef(null)
@@ -89,12 +88,12 @@ const Exam = () => {
 
                 if(data ){
 
-                    setTicket(data[targetId]) //get last answered question from db and set into state || if there is not any data in db then set to 0
+                    setTicket(data[targetId]) 
                     setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
                     setQuestionAudio(data[targetId].QuestionAudio)
                     setExplanationAudio(data[targetId].DescriptionAudio)
-                    setAnswers(data[targetId].Answers) //send to db to save
-                    setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) //after fetcihn answers filters it and set in state
+                    setAnswers(data[targetId].Answers)
+                    setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) 
                     setIsLoaded(true)
 
                 } 
@@ -225,24 +224,20 @@ const Exam = () => {
     } //refactor
 
 
-    useEffect(() => {
         
-        const handleSave = async() => {
-
+        const handleSave = async(data) => {
 
             try{
-                
-                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {saved} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+
+                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
 
             }catch(err){
                 console.log(err)
             }
 
+            
         }
 
-        handleSave()
-
-    },[saved])
 
     const handleReset = async () => {
 
@@ -316,7 +311,7 @@ const Exam = () => {
 
             <div className="buttons row">
                 <div className="buttons-start col">
-                    <button onClick={() => setSaved(prev => [...prev.filter(p => p.id !== targetId), {id : targetId}])}>Save</button>
+                    <button onClick={() => handleSave(ticket.Id)}>Save</button>
                 </div>
                 
                 <div className="buttons-end col">

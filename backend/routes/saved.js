@@ -8,8 +8,10 @@ savedRoute.get('/saved-tickets', verifyToken ,(req,res) => {
 
 savedRoute.post('/post-saved-tickets', verifyToken ,(req,res) => {
     
-    let data = {userId : req.user , answeredTicket : req.body.answeredTicket}
+    const data = {ticketId : req.body.data , userId : req.user}
+
     console.log(data)
+
 })
 
 
