@@ -1,5 +1,5 @@
 import Header from "../component/Header";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useCookies } from "react-cookie";
 
@@ -14,12 +14,20 @@ const Favorite = () => {
     const [targetId , setTargetId] = useState(0)
     const [ticket , setTicket] = useState()
     const [img , setImg] = useState()
+    const [explanationAudio , setExplanationAudio] = useState()
+    const [questionAudio , setQuestionAudio] = useState()
+    const [isAnswered, setIsAnswered] = useState([])
+    const [answers ,setAnswers] = useState([])
 
     const [correct, setCorrect] = useState(0)
     const [incorrect, setInorrect] = useState(0)
     const [count , setCount] = useState(0)
 
     const [isLoaded,setIsLoaded] = useState(false)
+
+    const collapseRef = useRef(null)
+    const explanationAudioRef = useRef(null)
+    const questionAudioRef  = useRef(null)
 
     useEffect(() => {
         const fetchSaved = async () => {
@@ -65,21 +73,31 @@ const Favorite = () => {
         <div className="favorite-container">
             <Header />
             <div className="saved-container">
-                {isLoaded && <div className="ticket">
-                    <div className="ticket-img">
-                        {img ? <img src={img} /> : <h1>img</h1>}
-                    </div>
-                    <div className="ticket-desc">
-                        {ticket.Description}
-                    </div>
-                    <div className="ticket-title">
-                        {ticket.Question}
-                    </div>
-                    <div className="ticket-buttons">
-                        {ticket.Answers[0].Text}
-                    </div>
-                    <div className="ticket-footer-buttons"></div>
-                </div> }
+                {isLoaded ? <div className="ticket">
+                        <div className="ticket-img">
+                            {img === false ? <></> : <img src={img}/>}
+                        </div>
+                        <div className="ticket-desc ">
+                            <div className="desc-top">
+                                <button type="button" onClick={() => setToggleDescAudio(prev => !prev)} >collapse</button>
+                            </div>
+                            <div class="collapse" ref={collapseRef}>
+                                
+                                <h6>{ticket.Description}</h6>
+                                <audio ref={explanationAudioRef} src={explanationAudio}></audio>
+                            
+                            </div>
+                        </div>
+                        <div className="ticket-content">
+                            <h5>{ticket.Question}</h5>
+                            <audio ref={questionAudioRef} src={questionAudio} />
+                        </div>
+                        <div className="ticket-answers">
+                            {isAnswered.length === 0 ? 
+                            answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answerId} {answer.Text}</button>) 
+                            : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
+                        </div>
+                    </div> : <></>}
             </div>
         </div>
     )    
