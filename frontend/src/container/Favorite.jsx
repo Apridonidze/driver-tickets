@@ -26,7 +26,7 @@ const Favorite = () => {
 
     const [isLoaded,setIsLoaded] = useState(false)
 
-    const btnRef = useRef(null)
+    const btnRef = useRef([null])
     const collapseRef = useRef(null)
     const explanationAudioRef = useRef(null)
     const questionAudioRef  = useRef(null)
@@ -62,14 +62,15 @@ const Favorite = () => {
                 setAnswers(saved[targetId].Answers)
                 setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) 
                 setIsLoaded(true)
-            }
+            } // add else statement to handle saved data list that is empty array []
             
             
         }
 
         targetTicket()
 
-    },[targetId , saved])
+    },[targetId ,saved])
+
 
     
     //create unsave async function 
@@ -109,7 +110,8 @@ const Favorite = () => {
                             answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref}>{answerId} {answer.Text}</button>) /**add onclick function to answer question */
                             : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
                         </div>
-                    </div> : <></>}
+                    </div> : <h1>No Saved Tickets</h1>}
+
             </div>
         </div>
     )    
