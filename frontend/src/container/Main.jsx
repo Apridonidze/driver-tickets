@@ -1,27 +1,28 @@
-import axios from "axios"
-import { Link } from "react-router-dom"
-import { useCookies } from 'react-cookie'
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { useCookies } from 'react-cookie'; //importing react libraries
 
-import { useEffect } from "react"
+import { useEffect } from "react"; //importing react hook
+
 
 const Main = () => {
 
-    const [cookies,setCookies] = useCookies(['token'])
+    const [cookies,setCookies] = useCookies(['token']); //cookies
 
     useEffect(() => {
 
         const handleCookies = () => {
 
             if(!cookies.token){
-                axios.get('http://localhost:8080/cookies').then(resp => setCookies(['token'] , resp.data.token))
-            }
-        }
+                axios.get('http://localhost:8080/cookies').then(resp => setCookies(['token'] , resp.data.token));
+            };
 
-        handleCookies()
+            return;
+        }; //checks if user has token , if user has no token function sends request to backend, which generates token for user and sends to frontend , then function saves token as a cookie 
 
-    },[cookies])
+        handleCookies();//declearing function
 
-
+    },[cookies]);//mounts on this dependencies change
 
     return(
         <div className="main-container container d-flex flex-column justify-content-between" style={{minHeight : '100vh'}}>
@@ -55,11 +56,10 @@ const Main = () => {
             </div>
 
         </div>
-    )
+    );
+};
 
-}
 
+document.title = 'Driver Tickets'; //adding title to page
 
-document.title = 'Driver Tickets'
-
-export default Main
+export default Main; //exporting component
