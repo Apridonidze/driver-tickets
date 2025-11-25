@@ -225,50 +225,74 @@ const Favorite = () => {
     
     
     return(
-        <div className="favorite-container">
+        <div className="favorite-container container d-flex flex-column justify-content-between">
             <Header />
-            <div className="saved-container">
-                <h1>{count}</h1>
-                {correct}
-                {incorrect}
-                {isLoaded && ticket ? <div className="ticket">
+                        <div className="exam-body" >
+                
+                <div className="exam-count row mb-2">
+
+                    <div className="count-start col d-flex">
+                        <span className='fs-5'><b className='text-success'>{correct}</b> / <b className='text-danger'>{incorrect}</b></span>
+                    </div>
+
+                    <div className="count-end col d-flex justify-content-end">
+                        <span className='text-primary fs-5'><b>{targetId}</b> / <b>{count}</b></span>
+                    </div>
+                
+                </div>
+                
+                {isLoaded ? 
+                    <div className="ticket">
+
                         <div className="ticket-img">
-                            {img === false ? <></> : <img src={img}/>}
+                            {img === false ? <></> : <img src={img} className='w-100'/>}
                         </div>
-                        <div className="ticket-desc ">
+
+                        <div className="ticket-desc my-3">
+
                             <div className="desc-top">
-                                <button type="button" onClick={() => setToggleDescAudio(prev => !prev)} >collapse</button>
+                                <span><button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} >!</button> განმარტება</span>
                             </div>
-                            <div class="collapse" ref={collapseRef}>
+
+                            <div class="collapse my-3" ref={collapseRef}>
                                 
                                 <h6>{ticket.Description}</h6>
                                 <audio ref={explanationAudioRef} src={explanationAudio}></audio>
                             
                             </div>
-                        </div>
-                        <div className="ticket-content">
-                            <h5>{ticket.Question}</h5>
-                            <audio ref={questionAudioRef} src={questionAudio} />
-                        </div>
-                        <div className="ticket-answers">
-                            {isAnswered.length === 0 ? 
-                            answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answerId} {answer.Text}</button>)
-                            : answers.map((answer , answerId) => <button className='btn btn-primary' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answerId} {answer.Text}</button>)}
-                        </div>
-                    </div> : <h1>No Saved Tickets</h1>}
 
-                    <div className="buttons row">
-                        <div className="buttons-start col">
-                            <button onClick={() => handleUnsave(ticket.Id)}>Unsave</button>
                         </div>
                         
-                        <div className="buttons-end col">
-                                
-                            <button onClick={() => handleAnswerButton('-')}>Prev</button>
-                            <button onClick={() => handleAnswerButton('+')}>Next</button>
-
+                        <div className="ticket-content">
+                            <h5 className='text-break'>{ticket.Question}</h5>
+                            <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
-                    </div>
+
+                        <div className="ticket-answers  row my-2 gap-1 mx-auto justify-content-center">
+                            {isAnswered.length === 0 ? 
+                            answers.map((answer , answerId) => <button className='btn py-2 btn-primary col col-12 col-sm-5 text-break m-2' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answer.Text}</button>) 
+                            : answers.map((answer , answerId) => <button className='btn py-2 btn-primary col col-12 col-sm-5 text-break' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answer.Text}</button>)}
+                        </div>
+
+                    </div> : <></>}
+
+            </div>
+
+            <div className="buttons row border-top border-3 p-2">
+
+                <div className="buttons-start col d-flex align-items-center fs-4">
+
+                    <i class="fa-solid fa-bookmark" onClick={() => handleUnsave(ticket.Id)} style={{cursor :'pointer'}}></i> 
+                    
+                    <button onClick={handleReset} className='btn'><i class="fa-solid fa-arrow-rotate-right"></i></button>
+                </div>
+                
+                <div className="buttons-end col d-flex align-items-center justify-content-end">
+                        
+                    <button className='btn' onClick={() => handleAnswerButton('-')}><i class="fa-solid fa-arrow-left"></i></button>
+                    <button className='btn' onClick={() => handleAnswerButton('+')}><i class="fa-solid fa-arrow-right"></i></button>
+
+                </div>
 
             </div>
         </div>

@@ -324,7 +324,7 @@ const Exam = () => {
                         <div className="ticket-desc my-3">
 
                             <div className="desc-top">
-                                <span><button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} >!</button> განმარტება</span>
+                                <button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
                             </div>
 
                             <div class="collapse my-3" ref={collapseRef}>
