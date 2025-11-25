@@ -35,7 +35,7 @@ const Main = () => {
 
             <div className="buttons row row-cols-2">
                 <Link to='/exam' className="btn btn-primary">Start Exam</Link>
-                <Link to='/favorites' className="btn btn-primary">Saved Tickets</Link>
+                <Link to='/saved-tickets' className="btn btn-primary">Saved Tickets</Link>
             </div>
 
         </div>
