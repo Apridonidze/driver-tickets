@@ -208,14 +208,13 @@ const Exam = () => {
         if(btnRef && btnRef.current){
                if(d === '+'){
                 setToggleDescAudio(false)
-                setTargetId(prev => prev + 1)
+                setTargetId(prev => prev + 1 > data.length - 1 ? data.length - 1 : prev + 1)
               btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                    
         }else {
             //add prev page
             setToggleDescAudio(false)
-            setTargetId(prev => prev - 1)
-
+            setTargetId(prev => prev - 1 < 0 ? 0 : prev - 1)
             btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                    
         }
