@@ -373,4 +373,6 @@ const Exam = () => {
     )
 }
 
+document.title = 'Driver Tickets - Exam'
+
 export default Exam

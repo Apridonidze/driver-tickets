@@ -56,6 +56,10 @@ const Main = () => {
 
         </div>
     )
+
 }
+
+
+document.title = 'Driver Tickets'
 
 export default Main

@@ -299,4 +299,7 @@ const Favorite = () => {
     )    
 }
 
+
+document.title = 'Driver Tickets - Saved'
+
 export default Favorite;
