@@ -349,19 +349,18 @@ const Exam = () => {
 
             <div className="buttons row border-top border-3 p-2">
 
-                <div className="buttons-start col d-flex align-items-center fs-4">
+                <div className="buttons-start col col-8 d-flex align-items-center fs-4">
 
                     {isSaved ? <i class="fa-solid fa-bookmark" onClick={() => handleUnsave(ticket.Id)} style={{cursor :'pointer'}}></i> : 
-                     <i class="fa-regular fa-bookmark" onClick={() => handleSave(ticket.Id)} style={{cursor :'pointer'}}> </i>}
+                    <i class="fa-regular fa-bookmark" onClick={() => handleSave(ticket.Id)} style={{cursor :'pointer'}}> </i>}
                     
                     <button onClick={handleReset} className='btn'><i class="fa-solid fa-arrow-rotate-right"></i></button>
                     
-                        <button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
-                    
+                    <button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
 
                 </div>
                 
-                <div className="buttons-end col d-flex align-items-center justify-content-end">
+                <div className="buttons-end col col-4 d-flex align-items-center justify-content-end">
                         
                     <button className='btn' onClick={() => handleAnswerButton('-')}><i class="fa-solid fa-arrow-left"></i></button>
                     <button className='btn' onClick={() => handleAnswerButton('+')}><i class="fa-solid fa-arrow-right"></i></button>
