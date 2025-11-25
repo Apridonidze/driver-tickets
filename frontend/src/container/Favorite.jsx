@@ -62,6 +62,7 @@ const Favorite = () => {
                 setExplanationAudio(saved[targetId].DescriptionAudio)
                 setAnswers(saved[targetId].Answers)
                 setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) 
+                setCount(saved.length)
                 setIsLoaded(true)
             } // add else statement to handle saved data list that is empty array []
 
@@ -82,7 +83,6 @@ const Favorite = () => {
 
     },[targetId ,saved])
 
-    console.log(saved)
 
     useEffect(() => {
 
@@ -135,8 +135,11 @@ const Favorite = () => {
             setTimeout(() => {
                 if(btnRef && btnRef.current && collapseRef && collapseRef.current){
                     
-                    btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                     setTargetId(prev => prev + 1 > saved.length - 1 ? saved.length - 1 : prev + 1)
+
+                    if(targetId + 1 === saved.length)return 
+
+                    btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                     setToggleDescAudio(false)
 
                 } else return
@@ -144,7 +147,6 @@ const Favorite = () => {
             
         }
     }
-
 
 
     useEffect(() => {
@@ -226,6 +228,7 @@ const Favorite = () => {
         <div className="favorite-container">
             <Header />
             <div className="saved-container">
+                <h1>{count}</h1>
                 {correct}
                 {incorrect}
                 {isLoaded && ticket ? <div className="ticket">
