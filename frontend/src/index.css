@@ -1,8 +1,8 @@
 body {
     background: #193e4a;
     color: white;
-}
+} /*adds background and text color to html body component*/
 
 body i {
     color: white;
-}
+} /*adds text color for i elements*/
