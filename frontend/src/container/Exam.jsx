@@ -317,15 +317,16 @@ const Exam = () => {
                 {isLoaded ? 
                     <div className="ticket">
 
-                        <div className="ticket-img">
+                        <div className="ticket-img py-2">
                             {img === false ? <></> : <img src={img} className='w-100'/>}
+                        </div>
+                        
+                        <div className="ticket-content">
+                            <h5 className='text-break'>{ticket.Question}</h5>
+                            <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
 
                         <div className="ticket-desc my-3">
-
-                            <div className="desc-top">
-                                <button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
-                            </div>
 
                             <div class="collapse my-3" ref={collapseRef}>
                                 
@@ -334,11 +335,6 @@ const Exam = () => {
                             
                             </div>
 
-                        </div>
-                        
-                        <div className="ticket-content">
-                            <h5 className='text-break'>{ticket.Question}</h5>
-                            <audio ref={questionAudioRef} src={questionAudio} />
                         </div>
 
                         <div className="ticket-answers  row my-2 gap-1 mx-auto justify-content-center">
@@ -359,6 +355,10 @@ const Exam = () => {
                      <i class="fa-regular fa-bookmark" onClick={() => handleSave(ticket.Id)} style={{cursor :'pointer'}}> </i>}
                     
                     <button onClick={handleReset} className='btn'><i class="fa-solid fa-arrow-rotate-right"></i></button>
+                    
+                        <button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
+                    
+
                 </div>
                 
                 <div className="buttons-end col d-flex align-items-center justify-content-end">

@@ -225,9 +225,10 @@ const Favorite = () => {
     
     
     return(
-        <div className="favorite-container container d-flex flex-column justify-content-between">
+        <div className="favorite-container container d-flex flex-column justify-content-between" style={{minHeight: '100vh'}}>
             <Header />
-                        <div className="exam-body" >
+                
+                <div className="exam-body" >
                 
                 <div className="exam-count row mb-2">
 
@@ -251,7 +252,7 @@ const Favorite = () => {
                         <div className="ticket-desc my-3">
 
                             <div className="desc-top">
-                                <span><button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} >!</button> განმარტება</span>
+                                <button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
                             </div>
 
                             <div class="collapse my-3" ref={collapseRef}>
