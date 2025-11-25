@@ -229,7 +229,7 @@ const Exam = () => {
 
             try{
 
-                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(true))
+                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(true)})
 
             }catch(err){
                 console.log(err)
@@ -242,7 +242,7 @@ const Exam = () => {
 
             try{
 
-                await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(false))
+                await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(false)})
 
             }catch(err){
                 console.log(err)
@@ -342,7 +342,7 @@ const Exam = () => {
 
             <div className="buttons row">
                 <div className="buttons-start col">
-                    {isSaved ? <button onClick={() => handleUnsave(ticket.Id)}>Save</button> : 
+                    {isSaved ? <button onClick={() => handleUnsave(ticket.Id)}>Unsave</button> : 
                     <button onClick={() => handleSave(ticket.Id)}>Save</button>}
                 </div>
                 

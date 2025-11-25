@@ -137,7 +137,7 @@ const Favorite = () => {
                     
                     setTargetId(prev => prev + 1 > saved.length - 1 ? saved.length - 1 : prev + 1)
 
-                    if(targetId + 1 === saved.length)return 
+                    if(targetId + 1 === saved.length) return 
 
                     btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
                     setToggleDescAudio(false)
