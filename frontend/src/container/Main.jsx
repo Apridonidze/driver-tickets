@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom"
-
-import { useCookies } from 'react-cookie'
-import { useEffect } from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
+import { useCookies } from 'react-cookie'
 
+import { useEffect } from "react"
 
 const Main = () => {
 
@@ -15,10 +14,7 @@ const Main = () => {
 
             if(!cookies.token){
                 axios.get('http://localhost:8080/cookies').then(resp => setCookies(['token'] , resp.data.token))
-            }else {
-                return //else validate token , if token is not provided clear setCookies state and useEffect will automatically handle user who does not  have token by gettin ne wone from above request
             }
-
         }
 
         handleCookies()
@@ -30,8 +26,9 @@ const Main = () => {
     return(
         <div className="main-container container d-flex flex-column justify-content-between" style={{minHeight : '100vh'}}>
             <div className="title text-center align-items center p-5">
-                <h1 className="pb-4">Driver Tickets</h1>
+                <h1 className="pb-4"><i class="fa-solid fa-car"></i> Driver Tickets</h1>
                 <h4>Welcome to Driver Tickets, where you can practice for upcoming theoretical driving exam.</h4>
+                <h5 className="pt-3">This platform is voice-assisted — all tickets, answers, and explanations are read aloud so you can learn by listening or read along.</h5>
             </div>
 
             <div className="buttons row row-cols-1 gap-3 d-flex flex-column align-items-center ">
@@ -45,7 +42,7 @@ const Main = () => {
                     <h6>This platform is for educational purposes and is not an official government exam.</h6>
                 </div>
 
-                <div className="col col-12 col-sm-4 border-end p-2">
+                <div className="col col-12 col-sm-4 border-end pt-1">
                     <h5>Feedback & Support</h5>
                     <h6>Have suggestions or found an issue?</h6>
                     <h6>Contact : <i class="fa-regular fa-envelope"></i> <a href="mailto:giorgiapridonidze08@gmail.com">giorgiapridonidze08@gmail.com</a></h6>
