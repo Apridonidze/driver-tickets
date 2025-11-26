@@ -6,15 +6,17 @@ const bodyParser = require('body-parser'); //importiung cors and body-parser for
 
 require('dotenv').config(); //importing dotenv
 
-app.use(cors()) //add cors options
-app.use(bodyParser.json());
-app.use(express.json()); //using express body-parser,  cors to ensure backend safety from another source attacks
-
 
 const cookiesProvider = require('./routes/cookies');
 const savedRoute = require('./routes/saved');
 const ticketRoute = require('./routes/tickets');
 const dataRoute = require('./routes/data');//importing routes
+const CorsOptions = require('./config/CorsOptions');
+
+
+app.use(cors(CorsOptions)) //add cors options
+app.use(bodyParser.json());
+app.use(express.json()); //using express body-parser,  cors to ensure backend safety from another source attacks
 
 
 const PORT = process.env.PORT; //importing server port from .env file
