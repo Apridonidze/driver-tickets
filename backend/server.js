@@ -4,6 +4,8 @@ const app = express(); //using express as app
 const cors = require('cors');
 const bodyParser = require('body-parser'); //importiung cors and body-parser for CORS issues
 
+require('dotenv').config(); //importing dotenv
+
 app.use(cors()) //add cors options
 app.use(bodyParser.json());
 app.use(express.json()); //using express body-parser,  cors to ensure backend safety from another source attacks
@@ -15,7 +17,7 @@ const ticketRoute = require('./routes/tickets');
 const dataRoute = require('./routes/data');//importing routes
 
 
-const PORT = 8080 ; //move to env
+const PORT = process.env.PORT; //importing server port from .env file
 
 app.use('/data' , dataRoute);
 app.use('/cookies' , cookiesProvider);
