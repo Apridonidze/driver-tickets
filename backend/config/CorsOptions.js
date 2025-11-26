@@ -1,7 +1,7 @@
 require('dotenv').config();//importing dotenv
 
 const CorsOptions = {
-    origin : process.env.PORT, 
+    origin : process.env.ORIGIN_URL,
     credentials : true,
     allowHeaders : ['Content-Type', 'Authorization'],
     methods : ['GET' , 'POST' , 'Delete']

@@ -11,7 +11,8 @@ const cookiesProvider = require('./routes/cookies');
 const savedRoute = require('./routes/saved');
 const ticketRoute = require('./routes/tickets');
 const dataRoute = require('./routes/data');//importing routes
-const CorsOptions = require('./config/CorsOptions');
+
+const CorsOptions = require('./config/CorsOptions');//importing cors options
 
 
 app.use(cors(CorsOptions)) //add cors options
