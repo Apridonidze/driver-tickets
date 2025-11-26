@@ -41,6 +41,9 @@ const Exam = () => {
 
 
     useEffect(() => {
+
+        console.log(BACKEND_URL)
+
         const fetchAnswered = async () => {
 
             try{
