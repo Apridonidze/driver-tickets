@@ -65,7 +65,7 @@ const Exam = () => {
         const  fetchExams = async () => {
 
             try{
-                axios.get(`${BACKEND_URL}/data`).then(resp => {setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
+                axios.get(`${BACKEND_URL}/data`).then(resp => {console.log(resp),setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
             }catch(err){
                 console.log(err);//consoles error
             };
