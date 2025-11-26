@@ -7,8 +7,9 @@ import { useEffect } from "react"; //importing react hook
 
 const Main = () => {
 
-    const [cookies,setCookies] = useCookies(['token']); //cookies
+    const [ cookies , setCookies, removeCookie ] = useCookies(['token']); //cookies
 
+   
     useEffect(() => {
 
         const handleCookies = () => {

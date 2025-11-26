@@ -57,7 +57,7 @@ savedRoute.get('/saved-tickets/:ticketId', verifyToken , async (req,res) => {//a
 savedRoute.post('/post-saved-tickets', verifyToken , async (req,res) => {//api first runs verifyToken middleware, and if middelware vaidates user token then api is executes 
     
     const data = {ticketId : req.body.data , userId : req.user}; //definig ticketId from request body and userId from verifyToken middleware
-
+    
     try{
 
         await db.query('insert into savedtickets (user_id , ticket_id) values (?,?)' , [ data.userId , data.ticketId ]);//inserting saved ticket into database based on userId and ticketid

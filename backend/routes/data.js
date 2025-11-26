@@ -5,12 +5,11 @@ const path = require('path'); //importing path from expres
 
 const tickets = require('../data/tikets.json');//importing ticket json file
 
-const verifyToken = require('../config/verifyToken');//importing token validation middleware
 
 dataRoute.use('/audio', express.static(path.join(__dirname, '../data/audio')));//creating route for audio folder
 dataRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets'))); //creating route for ticket images folder
 
-dataRoute.get('/',verifyToken ,async (req,res) => {
+dataRoute.get('/' , async (req,res) => {
     try {
         const data = tickets.map(ticket => ({
         ...ticket,

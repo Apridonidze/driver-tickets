@@ -1,11 +1,13 @@
-const mysql = require('mysql2/promise')
+const mysql = require('mysql2/promise'); //importing mysql promise
 
-const db = mysql.createPool({
-    host : 'localhost',
-    user : 'root',
-    password : '$fc59A636a27CBo5=sZ27o=Mc]WG76B',
-    database : 'driver_tickets_db', //move to .env
-})
+require('dotenv').config(); //importing dotenv
+
+const db = mysql.createPool({ //creating pool connection to db
+    host : process.env.DB_HOST,
+    user : process.env.DB_USER,
+    password : process.env.DB_PASSWORD,
+    database : process.env.DB_DB,
+}); //definig db pool dependencies from .env so we can use this pool for any sql satatement in apis needed easily
 
 
-module.exports = db
+module.exports = db; //exporting middleware
