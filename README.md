@@ -40,7 +40,7 @@
 
 1. **Clone the repository**
 
- git clone https://github.com/Apridonidze/driver-tickets
+    git clone https://github.com/Apridonidze/driver-tickets
 
 2. **Install dependencies**
 
@@ -74,11 +74,11 @@ create .env file and add following vairables to it :
 
 5. **Run Server**
 
-cd frontend npm run dev
+    cd frontend npm run dev
 
-cd backend nodemon server.js
+    cd backend nodemon server.js
 
---
+---
 
 - Backend runs on http://localhost:8080 by default.
 - Frontend runs on http://localhost:5173 by default.
