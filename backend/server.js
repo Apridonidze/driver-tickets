@@ -22,6 +22,10 @@ app.use(express.json()); //using express body-parser,  cors to ensure backend sa
 
 const PORT = process.env.PORT; //importing server port from .env file
 
+app.get('/', (req,res) => {
+    res.send('Welcome To Driver Tickets Server')
+})
+
 app.use('/data' , dataRoute);
 app.use('/cookies' , cookiesProvider);
 app.use('/saved' , savedRoute);
