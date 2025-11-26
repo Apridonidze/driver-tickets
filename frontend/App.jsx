@@ -6,7 +6,7 @@ import Main from './src/container/Main';
 import Favorite from './src/container/Favorite'; 
 import Exam from './src/container/Exam';//importing reawct component
 
-import '../frontend/src/index.css'; //importing css file
+import './src/index.css'; //importing css file
 
 const App = () => {
 
