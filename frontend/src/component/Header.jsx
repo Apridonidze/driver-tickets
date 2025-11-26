@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom" ; //importing react library
 
 const Header = () => {
     return(
@@ -11,7 +11,7 @@ const Header = () => {
                 <Link to='/saved-tickets' className="link link-light link-underline-opacity-0 link-underline-opacity-75-hover link-offset-3">Saved</Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Header
+export default Header; //exporting component
