@@ -15,6 +15,9 @@ savedRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets
 savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first runs verifyToken middleware, and if middelware vaidates user token then api is executes 
 
     try{
+        
+        const host = req.headers.host; // dynamic host
+        const protocol = req.protocol; //protocol (http)
 
         const [ savedTickets ] = await db.query('select ticket_id from savedtickets where user_id = ?' , [req.user]); //fetches saved ticket list and stores in variable
 
@@ -24,9 +27,9 @@ savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first r
 
         const data = tickets.map(ticket => ({
         ...ticket,
-        QuestionAudio: `http://localhost:8080/data/audio/${ticket.QuestionAudio}`,
-        DescriptionAudio: `http://localhost:8080/data/audio/${ticket.DescriptionAudio}`,
-        Image : `http://localhost:8080/data/tickets/${ticket.Image}`})).filter(dt => savedTicketsIds.includes(dt.Id)); //then data is defined by filtering all tickets data and variable only stores data whichs id === user saved ticket ids
+        QuestionAudio: `${protocol}://${host}/data/audio/${ticket.QuestionAudio}`,
+        DescriptionAudio: `${protocol}://${host}/data/audio/${ticket.DescriptionAudio}`,
+        Image : `${protocol}://${host}/data/tickets/${ticket.Image}`})).filter(dt => savedTicketsIds.includes(dt.Id)); //then data is defined by filtering all tickets data and variable only stores data whichs id === user saved ticket ids
 
         return res.status(200).json(data);//api then retusn 200 status code to server with filtered data
 
