@@ -1,4 +1,4 @@
-import App from '../App'; //importing root component
+import App from './App'; //importing root component
 
 import { createRoot } from 'react-dom/client'; //importing react root
 
