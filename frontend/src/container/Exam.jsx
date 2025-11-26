@@ -5,7 +5,11 @@ import { useEffect, useRef , useState } from "react"; //importing react hooks
 
 import Header from "../component/Header"; //importing react components
 
+import { BACKEND_URL } from '../../config';
+
 const Exam = () => {
+
+    console.log(BACKEND_URL)
 
     const [cookies] = useCookies(['token']); //cookies 
 
