@@ -1,278 +1,251 @@
-import axios from 'axios'
-import { useEffect, useRef } from "react"
-import Header from "../component/Header"
-import { useState } from 'react'
+import axios from 'axios';
+import { useCookies } from 'react-cookie'; //importing react libraries
 
-import { useCookies } from 'react-cookie'
+import { useEffect, useRef , useState } from "react"; //importing react hooks
+
+import Header from "../component/Header"; //importing react components
 
 const Exam = () => {
 
-    const [cookies] = useCookies(['token'])
+    const [cookies] = useCookies(['token']); //cookies 
 
-    const [data ,setData] = useState()
-    const [targetId , setTargetId] = useState(0)
-    const [ticket , setTicket] = useState()
-    const [img , setImg] = useState()
-    const [questionAudio, setQuestionAudio] = useState()
-    const [explanationAudio, setExplanationAudio] = useState()
-    const [answers , setAnswers] = useState()
-    const [isSaved , setIsSaved] = useState()
-    const [isLoaded,setIsLoaded] = useState(false)
+    const [data ,setData] = useState();
+    const [targetId , setTargetId] = useState(0);
+    const [ticket , setTicket] = useState();
+    const [img , setImg] = useState();
+    const [answers , setAnswers] = useState();
+    const [isSaved , setIsSaved] = useState(); //state for tickets data
 
-    const explanationAudioRef = useRef(null)
-    const questionAudioRef = useRef(null)
-    const collapseRef = useRef(null)
-    const btnRef = useRef([])
+    const [questionAudio, setQuestionAudio] = useState();
+    const [explanationAudio, setExplanationAudio] = useState();//states for ticket audio data
+    
+    const [toggleDescAudio , setToggleDescAudio] = useState(false); //toggles explanation audo
 
-    const [count ,setCount] = useState(0)
-    const [correct , setCorrect] = useState(0)
-    const [incorrect , setIncorrect] = useState(0)
+    const [isLoaded,setIsLoaded] = useState(false); //state to define if data is fully fetched
 
-    const [answeredTicket , setAnsweredTicket] = useState([])
-    const [isAnswered , setIsAnswered] = useState(null)
+    const explanationAudioRef = useRef(null);
+    const questionAudioRef = useRef(null);
+    const collapseRef = useRef(null);
+    const btnRef = useRef([]);//state for component refs
 
-    const [toggleDescAudio , setToggleDescAudio] = useState(false)
+    const [count ,setCount] = useState(0);
+    const [correct , setCorrect] = useState(0);
+    const [incorrect , setIncorrect] = useState(0); //states for counts
 
-
-      useEffect(() => {
-        const fetchAnswered = async () => {
-
-            try{
-
-                await axios.get('http://localhost:8080/tickets/answered-tickets' , {headers : {Authorization  : `Bearer ${cookies.token}`}})
-                .then(resp => {
-                    const data = resp.data
-
-                    setAnsweredTicket(data)
-                    setTargetId(data.length === 0 ? 0 : data[data.length - 1].ticketId + 2) 
-                    setCorrect(data.filter(ticket => ticket.answerId === ticket.correctId).length)
-                    setIncorrect(data.filter(ticket => ticket.answerId !== ticket.correctId).length)
-                    
-                })
-
-            }catch(err){
-                console.log('err')
-            }
-
-        }
-
-        fetchAnswered()
-
-    },[])
+    const [answeredTicket , setAnsweredTicket] = useState([]);
+    const [isAnswered , setIsAnswered] = useState(null); //states to check answered tickets
 
 
 
     useEffect(() => {
+        const fetchAnswered = async () => {
+
+            try{
+
+                await axios.get('http://localhost:8080/tickets/answered-tickets' , {headers : {Authorization  : `Bearer ${cookies.token}`}}) //fetches data from api , sends headers to verify token
+                .then(resp => {
+
+                    const data = resp.data; //defines resp.data
+
+                    setAnsweredTicket(data); //sets data in state
+                    setTargetId(data.length === 0 ? 0 : data[data.length - 1].ticketId + 2) ; //gets last answered ticket id and navigates user to this ticket 
+                    setCorrect(data.filter(ticket => ticket.answerId === ticket.correctId).length); //gets correct answer count from db
+                    setIncorrect(data.filter(ticket => ticket.answerId !== ticket.correctId).length); //gets incorrect answer count from db
+                    
+                })
+
+            }catch(err){
+                console.log('err') ; //consoles error message
+            };
+        };//function fetches answered tickets from db
 
         const  fetchExams = async () => {
 
             try{
-
-                axios.get('http://localhost:8080/data').then(resp => {setData(resp.data), setCount(resp.data.length), console.log(resp)})
-
+                axios.get('http://localhost:8080/data').then(resp => {setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
             }catch(err){
-                console.log(err)
-            }
+                console.log(err);//consoles error
+            };
+        };//function fetches all exams data on every mount
 
-        }
+        fetchExams();//declears function
+        fetchAnswered(); //declears function
 
-        fetchExams();
-
-    },[])
-
+    },[]); //function mounts once every mount
 
 
     useEffect(() => {
 
         const targetTicket =  () => {
 
+            if(data){
 
-                if(data){
+                setTicket(data[targetId]); //sets ticket based on targetId
+                setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false); //chekcs if ticket has image if so it sets in state else sets false to state
+                setQuestionAudio(data[targetId].QuestionAudio);//sets question audio into state
+                setExplanationAudio(data[targetId].DescriptionAudio);//sets question explanation into state
+                setAnswers(data[targetId].Answers); //sets answers in state
+                setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null); //checks if ticket is alreadt answered
+                setIsLoaded(true);//sets state to true to define that ticket is fully loaded
 
-                    setTicket(data[targetId]) 
-                    setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false)
-                    setQuestionAudio(data[targetId].QuestionAudio)
-                    setExplanationAudio(data[targetId].DescriptionAudio)
-                    setAnswers(data[targetId].Answers)
-                    setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null) 
-                    setIsLoaded(true)
+            } return ;
+        };
 
-                } 
+        targetTicket(); //declearing function
 
-
-                return 
-
-        }
-
-        targetTicket();
-
-    },[targetId , data])
-
-  
+    },[targetId , data]) //function triggers on this dependencies change
 
 
     useEffect(() => {
 
-        if(questionAudioRef && questionAudioRef.current){
-            questionAudioRef.current.play()
-        }
+        if(questionAudioRef && questionAudioRef.current){//defines refs
+            questionAudioRef.current.play(); //plays question audio once ref is defines
+        };
 
-    },[questionAudio , questionAudioRef])
+    },[questionAudio , questionAudioRef]); //function run on this depenencies
 
     useEffect(() => {
 
-        if(explanationAudioRef && explanationAudioRef.current && questionAudioRef && questionAudioRef.current){
+        if(explanationAudioRef && explanationAudioRef.current && questionAudioRef && questionAudioRef.current){//defines ref
             
-            if(toggleDescAudio){
+            if(toggleDescAudio){//if description is toggles
 
-               questionAudioRef.current.pause()
-                explanationAudioRef.current.play()
+               questionAudioRef.current.pause(); //pauses question audio
+                explanationAudioRef.current.play(); //playes question explanation
+
             }else {
-                questionAudioRef.current.play()
-                explanationAudioRef.current.pause()
-        }
+                questionAudioRef.current.play();//play question audio
+                explanationAudioRef.current.pause();//pauses exlpanation audio
+            };
+        };return; //if refs are not defines then function returns nothing
 
-        }        return
+    },[toggleDescAudio , explanationAudioRef , questionAudioRef]); //function runs on this dependencies
 
-    },[toggleDescAudio , explanationAudioRef , questionAudioRef])
 
     const handleAnswers = async (answer) => {
 
-        
         if(btnRef && btnRef.current){
 
              const correctIndex = answers.findIndex(a => a.IsCorrect);
 
-            if(answer.IsCorrect){
+            if(answer.IsCorrect){ //if user answer is correct
+                setCorrect(prev => prev + 1) ; //increases correct count
+                btnRef.current[answer.answerId].classList.add('btn-success') ; //styling answer as correct
+                setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}]); //pushes to answered ticket list state
+            }else {//if user answer is incorrect
+                setIncorrect(prev => prev + 1) ; //increases incorrect count
+                btnRef.current[answer.answerId].classList.add('btn-danger'); //styles user answer as wrong
+                btnRef.current[correctIndex].classList.add('btn-success'); //styles correct answer as correct
+                setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}]); //pushes to answered ticket list stae
+            };
 
-                setCorrect(prev => prev + 1) ;
-                btnRef.current[answer.answerId].classList.add('btn-success') ;
-                setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}])
+            let answeredTicketLast = answeredTicket[answeredTicket.length - 1]; //gets last ticket from list
 
-            }else {
-                setIncorrect(prev => prev + 1) ;
-                btnRef.current[answer.answerId].classList.add('btn-danger') ;
-                btnRef.current[correctIndex].classList.add('btn-success')
-                setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}])
-            }
+            if(answeredTicketLast){ //if we have answered ticket then this statements execute
+                
+                try{
 
-             let answeredTicketLast = answeredTicket[answeredTicket.length - 1]
-
-                if(answeredTicketLast){
-                    try{
-               
-                    
-                    await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))
+                    await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))//post answered ticket to server and returns response
 
                 }catch(err){
-                console.log('internal error')
-            }
-                }
+                    console.log('internal error');//consoles error
+                };
+            };
 
             setTimeout(() => {
-                if(btnRef && btnRef.current && collapseRef && collapseRef.current){
+
+                if(btnRef && btnRef.current && collapseRef && collapseRef.current){//defines refs
                     
-                    btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
-                    setTargetId(prev => prev + 1)
-                    setToggleDescAudio(false)
+                    btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success')); //removes refs that are nulls and removes style from rest
+                    setTargetId(prev => prev + 1); //increases targetId
+                    setToggleDescAudio(false); //untoggles description audio
 
-                } else return
-            }, 1000)
-            
-        }
-    }
-
+                } else return; //if refs are not defined returns nothing
+            }, 1000);//this function triggers after 1 seconds from when button is clicked
+        };
+    };//function triggers on answer button click
 
 
     useEffect(() => {
 
-        if(btnRef && btnRef.current){
+        if(btnRef && btnRef.current){//defines refs
         
-             if(isAnswered && isAnswered.length !== 0){
-                const ticket = isAnswered[0]
+             if(isAnswered && isAnswered.length !== 0){ //checks if user has already responsed for this ticket and if so
+                const ticket = isAnswered[0];  //gets answered ticket
 
-                if(ticket.answerId === ticket.correctId){
-                    btnRef.current[ticket.correctId].classList.add('btn-success')
+                if(ticket.answerId === ticket.correctId){//checks if user choosed correct response
+                    btnRef.current[ticket.correctId].classList.add('btn-success'); //styles correct btn
                 }else {
-                    btnRef.current[ticket.correctId].classList.add('btn-success')
-                    btnRef.current[ticket.answerId].classList.add('btn-danger')
-                }
+                    btnRef.current[ticket.correctId].classList.add('btn-success');//styles correct response as correct
+                    btnRef.current[ticket.answerId].classList.add('btn-danger'); //styles user response as incorrect
+                };
             
-            }else return
-            
-        }
-    },[isAnswered])
+            }else return; //else if refs are not defines returns nothing
+        };
+    },[isAnswered]);//function runs on this dependencies
 
     
     const handleAnswerButton = (d) => {
-        if(btnRef && btnRef.current){
-               if(d === '+'){
-                setToggleDescAudio(false)
-                setTargetId(prev => prev + 1 > data.length - 1 ? data.length - 1 : prev + 1)
-              btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
-                   
-        }else {
-            //add prev page
-            setToggleDescAudio(false)
-            setTargetId(prev => prev - 1 < 0 ? 0 : prev - 1)
-            btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'))
-                   
-        }
-        }else {
-            return
-        }
-    } //refactor
+
+        if(btnRef && btnRef.current){//defines ref
+            if(d === '+'){ //checks if user pressed next page buttopn
+                setToggleDescAudio(false); //untoggles description
+                setTargetId(prev => prev + 1 > data.length - 1 ? data.length - 1 : prev + 1); //increasese targetId (state filters targetId values that are greater than data.length or less than zero)
+                btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success')); //filters button refs that are null and removes classes from rest
+            }else {//checks if user pressed preev page button
+                setToggleDescAudio(false); //untoggles description
+                setTargetId(prev => prev - 1 < 0 ? 0 : prev - 1);//decreases targetId (state filters targetId values that are greater than data.length or less than zero)
+                btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success'));//filters button refs that are null and removes classes from rest
+            };
+        }return; //if refs are not defined then function does nothing   
+    };//function is triggered on answer button presses
 
 
+    const handleSave = async(data) => {
+
+        try{
+    
+            await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(true)}); ///sends ticket data to server 
+        }catch(err){
+            console.log(err) ; //consoles error
+        };       
+    };//function triggers on save button click
+
+
+    const handleUnsave = async(id) => {
+
+        try{
         
-        const handleSave = async(data) => {
+            await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(false)});//sends delete statement to api to remove ticket from db as saved
 
-            try{
-
-                await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(true)})
-
-            }catch(err){
-                console.log(err)
-            }
-
-            
-        }
-
-        const handleUnsave = async(id) => {
-
-            try{
-
-                await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(false)})
-
-            }catch(err){
-                console.log(err)
-            }
-
-        }
+        }catch(err){
+            console.log(err); //consoles error
+        };
+    }; //function trigegers on unsave button click
 
 
     const handleReset = async () => {
 
         try{
 
-            await axios.delete('http://localhost:8080/tickets/delete-answered-tickets' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => window.location.reload())
+            await axios.delete('http://localhost:8080/tickets/delete-answered-tickets' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => window.location.reload());//reloads page when delete statement is ssended to api to show user updated version as soon as possible
 
         }catch(err){
-            console.log(err)
-        }
-
-    }
+            console.log(err); //consoles error
+        };
+    };//function triggers on reset button 
 
     useEffect(() => {
 
-        if(collapseRef && collapseRef.current){
-            toggleDescAudio ? (collapseRef.current.classList.remove('collapse')) : collapseRef.current.classList.add('collapse')
+        if(collapseRef && collapseRef.current){ //defines refs for collapse component
 
-        }
+            toggleDescAudio ? (collapseRef.current.classList.remove('collapse')) : collapseRef.current.classList.add('collapse') //if toggleDescAudio === true then it collapses component ,else removes collapse classlist from ref
 
-        return
+        };
 
-    },[toggleDescAudio])
+        return ; //if refs are not defined returns nothing
+
+    },[toggleDescAudio]) ; //function mounts on toggledescaudio change
 
 
     useEffect(() => {
@@ -281,24 +254,21 @@ const Exam = () => {
 
             try{
 
-                await axios.get(`http://localhost:8080/saved/saved-tickets/${targetId + 1}` , {headers : {Authorization  : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(resp.data))
+                await axios.get(`http://localhost:8080/saved/saved-tickets/${targetId + 1}` , {headers : {Authorization  : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(resp.data)); //fetcches saved tickets from db and sets in state
 
             }catch(err){
-                console.log(err)
-            }
+                console.log(err); //consoles error
+            };
+        };
 
-        }
+        fetchIsSaved() ; //decleares function
 
-        fetchIsSaved()
-
-    },[isSaved , targetId])
+    },[isSaved , targetId]) ;//function mounts on this dependecines change
 
 
     return(
         <div className="exam-container container d-flex flex-column justify-content-between" style={{minHeight: '100vh'}}>
             <Header />
-
-            
 
             <div className="exam-body" >
                 
@@ -370,9 +340,9 @@ const Exam = () => {
             </div>
             
         </div>
-    )
-}
+    );
+};
 
-document.title = 'Driver Tickets - Exam'
+document.title = 'Driver Tickets - Exam'; //adds title to page
 
-export default Exam
+export default Exam; //exporting component
