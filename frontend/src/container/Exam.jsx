@@ -9,7 +9,6 @@ import { BACKEND_URL } from '../../config';
 
 const Exam = () => {
 
-    console.log(BACKEND_URL)
 
     const [cookies] = useCookies(['token']); //cookies 
 
@@ -46,7 +45,7 @@ const Exam = () => {
 
             try{
 
-                await axios.get('http://localhost:8080/tickets/answered-tickets' , {headers : {Authorization  : `Bearer ${cookies.token}`}}) //fetches data from api , sends headers to verify token
+                await axios.get(`${BACKEND_URL}/tickets/answered-tickets` , {headers : {Authorization  : `Bearer ${cookies.token}`}}) //fetches data from api , sends headers to verify token
                 .then(resp => {
 
                     const data = resp.data; //defines resp.data
@@ -66,7 +65,7 @@ const Exam = () => {
         const  fetchExams = async () => {
 
             try{
-                axios.get('http://localhost:8080/data').then(resp => {setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
+                axios.get(`${BACKEND_URL}/data`).then(resp => {setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
             }catch(err){
                 console.log(err);//consoles error
             };
@@ -149,7 +148,7 @@ const Exam = () => {
                 
                 try{
 
-                    await axios.post('http://localhost:8080/tickets/post-answered-tickets' , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))//post answered ticket to server and returns response
+                    await axios.post(`${BACKEND_URL}/tickets/post-answered-tickets` , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))//post answered ticket to server and returns response
 
                 }catch(err){
                     console.log('internal error');//consoles error
@@ -209,7 +208,7 @@ const Exam = () => {
 
         try{
     
-            await axios.post('http://localhost:8080/saved/post-saved-tickets' , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(true)}); ///sends ticket data to server 
+            await axios.post(`${BACKEND_URL}/saved/post-saved-tickets` , {data} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(true)}); ///sends ticket data to server 
         }catch(err){
             console.log(err) ; //consoles error
         };       
@@ -220,7 +219,7 @@ const Exam = () => {
 
         try{
         
-            await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(false)});//sends delete statement to api to remove ticket from db as saved
+            await axios.delete(`${BACKEND_URL}/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => {console.log(resp) ; setIsSaved(false)});//sends delete statement to api to remove ticket from db as saved
 
         }catch(err){
             console.log(err); //consoles error
@@ -232,7 +231,7 @@ const Exam = () => {
 
         try{
 
-            await axios.delete('http://localhost:8080/tickets/delete-answered-tickets' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => window.location.reload());//reloads page when delete statement is ssended to api to show user updated version as soon as possible
+            await axios.delete(`${BACKEND_URL}/tickets/delete-answered-tickets`, {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => window.location.reload());//reloads page when delete statement is ssended to api to show user updated version as soon as possible
 
         }catch(err){
             console.log(err); //consoles error
@@ -258,7 +257,7 @@ const Exam = () => {
 
             try{
 
-                await axios.get(`http://localhost:8080/saved/saved-tickets/${targetId + 1}` , {headers : {Authorization  : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(resp.data)); //fetcches saved tickets from db and sets in state
+                await axios.get(`${BACKEND_URL}/saved/saved-tickets/${targetId + 1}` , {headers : {Authorization  : `Bearer ${cookies.token}`}}).then(resp => setIsSaved(resp.data)); //fetcches saved tickets from db and sets in state
 
             }catch(err){
                 console.log(err); //consoles error

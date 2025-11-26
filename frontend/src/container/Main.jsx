@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie'; //importing react libraries
 
 import { useEffect } from "react"; //importing react hook
 
+import { BACKEND_URL } from "../../config";
 
 const Main = () => {
 
@@ -15,7 +16,7 @@ const Main = () => {
         const handleCookies = () => {
 
             if(!cookies.token){
-                axios.get('http://localhost:8080/cookies').then(resp => setCookies(['token'] , resp.data.token));
+                axios.get(`${BACKEND_URL}/cookies`).then(resp => setCookies(['token'] , resp.data.token));
             };
 
             return;

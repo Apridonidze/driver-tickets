@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react"; //importing react hooks
 
 import Header from "../component/Header"; //importing react compon ent
 
+import { BACKEND_URL } from "../../config";
+
 const Favorite = () => {
 
     const [cookies] = useCookies(['token']); //cookies
@@ -39,7 +41,7 @@ const Favorite = () => {
 
             try{
 
-                await axios.get('http://localhost:8080/saved/saved-tickets' , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setSaved(resp.data)); //fetches data from api and saves in saved state
+                await axios.get(`${BACKEND_URL}/saved/saved-tickets` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setSaved(resp.data)); //fetches data from api and saves in saved state
 
             }catch(err){
                 console.log(err); //consoles error
@@ -189,7 +191,7 @@ const Favorite = () => {
     const handleUnsave = async(id) => {
 
         try{
-            await axios.delete(`http://localhost:8080/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setSaved(saved.filter(s => s.Id !== id))) ; //sends delete request to server and deletes form database as saved ticket, removes current ticket from state to not dispaly in time 
+            await axios.delete(`${BACKEND_URL}/saved/delete-saved-tickets/${id}` , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => setSaved(saved.filter(s => s.Id !== id))) ; //sends delete request to server and deletes form database as saved ticket, removes current ticket from state to not dispaly in time 
         }catch(err){
             console.log(err); //consoles internal error
         };
