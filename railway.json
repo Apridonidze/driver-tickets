@@ -1,0 +1,20 @@
+{
+  "services": {
+    "backend": {
+      "path": "backend",
+      "build": { "builder": "NIXPACKS" },
+      "start": "npm start"
+    },
+    "frontend": {
+      "path": "frontend",
+      "build": {
+        "builder": "STATIC",
+        "buildCommand": "npm install && npm run build"
+      },
+      "start": "npm run preview",
+      "static": {
+        "publishPath": "frontend/dist"
+      }
+    }
+  }
+}
