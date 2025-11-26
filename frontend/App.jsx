@@ -1,9 +1,9 @@
 import { useCookies } from 'react-cookie';
 import { Navigate, RouterProvider, createBrowserRouter} from 'react-router-dom';//importing react libraries
 
-import Main from '../frontend/src/container/Main';
-import Favorite from '../frontend/src/container/Favorite'; 
-import Exam from '../frontend/src/container/Exam';//importing reawct component
+import Main from './src/container/Main';
+import Favorite from './src/container/Favorite'; 
+import Exam from './src/container/Exam';//importing reawct component
 
 import '../frontend/src/index.css'; //importing css file
 
