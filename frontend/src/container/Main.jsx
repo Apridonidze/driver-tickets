@@ -34,8 +34,8 @@ const Main = () => {
             </div>
 
             <div className="buttons row row-cols-1 gap-3 d-flex flex-column align-items-center ">
-                <Link to='/exam' className="btn btn-primary fs-3 w-50">Start Exam</Link>
-                <Link to='/saved-tickets' className="btn btn-primary fs-3 w-50">Saved Tickets</Link>
+                <Link to='/exam' className="btn btn-primary fs-3 w-50 border border-3">Start Exam</Link>
+                <Link to='/saved-tickets' className="btn btn-primary fs-3 w-50 border border-3">Saved Tickets</Link>
             </div>
 
             <div className="footer row border-top border-3 p-2">

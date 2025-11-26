@@ -309,8 +309,8 @@ const Exam = () => {
 
                         <div className="ticket-answers  row my-2 gap-1 mx-auto justify-content-center">
                             {isAnswered.length === 0 ? 
-                            answers.map((answer , answerId) => <button className='btn py-2 btn-primary col col-12 col-sm-5 text-break m-2' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answer.Text}</button>) 
-                            : answers.map((answer , answerId) => <button className='btn py-2 btn-primary col col-12 col-sm-5 text-break' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answer.Text}</button>)}
+                            answers.map((answer , answerId) => <button className='btn py-2 btn-primary col col-12 col-sm-5 text-break m-2 border border' key={answerId} ref={ref => btnRef.current[answerId] = ref} onClick={() => handleAnswers({IsCorrect : answer.IsCorrect , answerId : answerId})}>{answer.Text}</button>) 
+                            : answers.map((answer , answerId) => <button className='btn py-2 btn-primary col col-12 col-sm-5 text-break border border' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answer.Text}</button>)}
                         </div>
 
                     </div> : <></>}
@@ -326,7 +326,7 @@ const Exam = () => {
                     
                     <button onClick={handleReset} className='btn'><i class="fa-solid fa-arrow-rotate-right"></i></button>
                     
-                    <button type="button" className='btn btn-primary fs-6' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
+                    <button type="button" className='btn btn-primary fs-6 border border' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
 
                 </div>
                 
