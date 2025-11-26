@@ -252,7 +252,7 @@ const Favorite = () => {
                             : answers.map((answer , answerId) => <button className='btn py-2 btn-primary col col-12 col-sm-5 text-break' key={answerId} ref={ref => btnRef.current[answerId] = ref} >{answer.Text}</button>)}
                         </div>
 
-                    </div> : <></>}
+                    </div> : <h1>No Saved Tickets.</h1>}
 
             </div>
 
