@@ -31,5 +31,4 @@ app.use('/cookies' , cookiesProvider);
 app.use('/saved' , savedRoute);
 app.use('/tickets', ticketRoute); //defining routes 
 
-
-app.listen(PORT , () => {console.log(`http://localhost:${PORT}`)} ); //listening to port to check if backend is running 
+app.listen(PORT , () => {console.log(`Listening to ${process.env.BACKEND_URL} , Allowed ORigin : ${process.env.ORIGIN_URL}` )} ); //listening to port to check if backend is running 

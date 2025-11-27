@@ -12,15 +12,12 @@ dataRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets'
 
 dataRoute.get('/', async (req, res) => {
 
-    const host = req.headers.host; // dynamic host
-    const protocol = req.protocol; //protocol (http)
-
   try {
     const data = tickets.map(ticket => ({
         ...ticket,
-        QuestionAudio: `${protocol}://${host}/data/audio/${ticket.QuestionAudio}`,
-        DescriptionAudio: `${protocol}://${host}/data/audio/${ticket.DescriptionAudio}`,
-        Image: `${protocol}://${host}/data/tickets/${ticket.Image}`
+        QuestionAudio: `${process.env.BACKEND_URL}/data/audio/${ticket.QuestionAudio}`,
+        DescriptionAudio: `‘${process.env.BACKEND_URL}/data/audio/${ticket.DescriptionAudio}`,
+        Image: `${process.env.BACKEND_URL}/data/tickets/${ticket.Image}`
     }));//maps tickets and gets ticket audio image and descriptioon audio
     
     return res.status(200).json(data);//returns response to frotned

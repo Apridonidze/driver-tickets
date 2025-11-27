@@ -8,6 +8,8 @@ const path = require('path');//importing path from express
 
 const tickets = require('../data/tikets.json'); //importing tickets data folder
 
+require('dotenv').config();
+
 savedRoute.use('/audio', express.static(path.join(__dirname, '../data/audio')));//defining urls for audio file
 savedRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets'))); //defining url for ticket images 
 
@@ -15,9 +17,7 @@ savedRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets
 savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first runs verifyToken middleware, and if middelware vaidates user token then api is executes 
 
     try{
-        
-        const host = req.headers.host; // dynamic host
-        const protocol = req.protocol; //protocol (http)
+     
 
         const [ savedTickets ] = await db.query('select ticket_id from savedtickets where user_id = ?' , [req.user]); //fetches saved ticket list and stores in variable
 
@@ -27,9 +27,9 @@ savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first r
 
         const data = tickets.map(ticket => ({
         ...ticket,
-        QuestionAudio: `${protocol}://${host}/data/audio/${ticket.QuestionAudio}`,
-        DescriptionAudio: `${protocol}://${host}/data/audio/${ticket.DescriptionAudio}`,
-        Image : `${protocol}://${host}/data/tickets/${ticket.Image}`})).filter(dt => savedTicketsIds.includes(dt.Id)); //then data is defined by filtering all tickets data and variable only stores data whichs id === user saved ticket ids
+        QuestionAudio: `${process.env.BACKEND_URL}/data/audio/${ticket.QuestionAudio}`,
+        DescriptionAudio: `${process.env.BACKEND_URL}/data/audio/${ticket.DescriptionAudio}`,
+        Image : `${process.env.BACKEND_URL}/data/tickets/${ticket.Image}`})).filter(dt => savedTicketsIds.includes(dt.Id)); //then data is defined by filtering all tickets data and variable only stores data whichs id === user saved ticket ids
 
         return res.status(200).json(data);//api then retusn 200 status code to server with filtered data
 
