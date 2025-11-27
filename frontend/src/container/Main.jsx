@@ -10,7 +10,7 @@ const Main = () => {
 
     const [ cookies , setCookies, removeCookie ] = useCookies(['token']); //cookies
 
-   
+    
     useEffect(() => {
 
         const handleCookies = () => {

@@ -53,7 +53,6 @@ const Exam = () => {
 
                     
                     const data = resp.data; //defines resp.data
-                    console.log(data)
 
                     setAnsweredTicket(data); //sets data in state
                     setTargetId(data.length === 0 ? 0 : data[data.length - 1].ticketId + 2) ; //gets last answered ticket id and navigates user to this ticket 
@@ -70,7 +69,7 @@ const Exam = () => {
         const  fetchExams = async () => {
 
             try{
-                axios.get(`https://driver-tickets-production.up.railway.app/data`).then(resp => {console.log(resp),setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
+                axios.get(`${BACKEND_URL}/data`).then(resp => {console.log(resp),setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
             }catch(err){
                 console.log(err);//consoles error
             };
