@@ -20,7 +20,6 @@ app.use(bodyParser.json());
 app.use(express.json()); //using express body-parser,  cors to ensure backend safety from another source attacks
 
 
-const PORT = process.env.PORT; //importing server port from .env file
 
 app.get('/', (req,res) => {
     res.send('Welcome To Driver Tickets Server')
@@ -31,4 +30,8 @@ app.use('/cookies' , cookiesProvider);
 app.use('/saved' , savedRoute);
 app.use('/tickets', ticketRoute); //defining routes 
 
-app.listen(PORT , () => {console.log(`Listening to ${process.env.BACKEND_URL} , Allowed ORigin : ${process.env.ORIGIN_URL}` )} ); //listening to port to check if backend is running 
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server listening on port ${PORT}`);
+});

@@ -10,8 +10,8 @@ const tickets = require('../data/tikets.json'); //importing tickets data folder
 
 require('dotenv').config();
 
-savedRoute.use('/audio', express.static(path.join(__dirname, '../data/audio')));//defining urls for audio file
-savedRoute.use('/tickets' , express.static(path.join(__dirname, '../data/tickets'))); //defining url for ticket images 
+savedRoute.use('/audio', express.static(path.resolve(__dirname, '../data/audio')));//defining urls for audio file
+savedRoute.use('/tickets' , express.static(path.resolve(__dirname, '../data/tickets'))); //defining url for ticket images 
 
 
 savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first runs verifyToken middleware, and if middelware vaidates user token then api is executes 
