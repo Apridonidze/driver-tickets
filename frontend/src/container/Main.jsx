@@ -10,6 +10,7 @@ const Main = () => {
 
     const [ cookies , setCookies, removeCookie ] = useCookies(['token']); //cookies
 
+    console.log(BACKEND_URL)
     
     useEffect(() => {
 
