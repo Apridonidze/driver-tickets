@@ -154,7 +154,7 @@ const Exam = () => {
                 }catch(err){
                     console.log('internal error');//consoles error
                 };
-            };
+            }; 
 
             setTimeout(() => {
 
@@ -166,6 +166,8 @@ const Exam = () => {
 
                 } else return; //if refs are not defined returns nothing
             }, 1000);//this function triggers after 1 seconds from when button is clicked
+
+            return;
         };
     };//function triggers on answer button click
 
