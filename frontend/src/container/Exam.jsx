@@ -143,7 +143,7 @@ const Exam = () => {
                 setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}]); //pushes to answered ticket list stae
             };
             
-            let answeredTicketLast = answeredTicket.at(-1) || null;
+            let answeredTicketLast = answeredTicket?.at(-1) || null;
             
             if(answeredTicketLast && cookies?.token){ //if we have answered ticket then this statements execute
                 
