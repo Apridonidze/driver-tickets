@@ -42,18 +42,14 @@ const Exam = () => {
 
     useEffect(() => {
 
-        console.log(BACKEND_URL)
 
         const fetchAnswered = async () => {
 
             try{
 
                 await axios.get(`${BACKEND_URL}/tickets/answered-tickets` , {headers : {Authorization  : `Bearer ${cookies.token}`}}) //fetches data from api , sends headers to verify token
-                .then(resp => {
-
-                    
+                .then(resp => {                    
                     const data = resp.data; //defines resp.data
-                    console.log(data)
 
                     setAnsweredTicket(data); //sets data in state
                     setTargetId(data.length === 0 ? 0 : data[data.length - 1].ticketId + 2) ; //gets last answered ticket id and navigates user to this ticket 

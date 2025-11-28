@@ -8,9 +8,8 @@ import { BACKEND_URL } from "../../config";
 
 const Main = () => {
 
-    const [ cookies , setCookies, removeCookie ] = useCookies(['token']); //cookies
+    const [ cookies , setCookies ] = useCookies(['token']); //cookies
 
-    console.log(BACKEND_URL)
     
     useEffect(() => {
 
@@ -35,12 +34,12 @@ const Main = () => {
                 <h5 className="pt-3">This platform is voice-assisted — all tickets, answers, and explanations are read aloud so you can learn by listening or read along.</h5>
             </div>
 
-            <div className="buttons row row-cols-1 gap-3 d-flex flex-column align-items-center ">
+            <div className="buttons row row-cols-1 gap-3 d-flex flex-column align-items-center my-5">
                 <Link to='/exam' className="btn btn-primary fs-3 w-50 border border-3">Start Exam</Link>
                 <Link to='/saved-tickets' className="btn btn-primary fs-3 w-50 border border-3">Saved Tickets</Link>
             </div>
 
-            <div className="footer row border-top border-3 p-2">
+            <div className="footer row border-top border-3 p-2 mt-5">
                 <div className="col col-12 col-sm-4 border-end p-2">
                     <h5>© 2025 Driver Tickets. All rights reserved.</h5>
                     <h6>This platform is for educational purposes and is not an official government exam.</h6>
