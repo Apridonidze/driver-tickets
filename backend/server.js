@@ -29,6 +29,12 @@ app.use('/tickets', ticketRoute);
 app.use('/audio', express.static(path.join(__dirname, 'data/audio')));
 app.use('/ticket', express.static(path.join(__dirname, 'data/tickets')));
 
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server listening on port ${PORT}`);
