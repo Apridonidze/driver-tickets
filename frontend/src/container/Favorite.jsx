@@ -266,7 +266,7 @@ const Favorite = () => {
                     
                     <button onClick={() => window.location.reload()} className='btn'><i class="fa-solid fa-arrow-rotate-right"></i></button>
                     
-                    <button type="button" className='btn btn-primary fs-6 border border' onClick={() => setToggleDescAudio(prev => !prev)} ><i class="fa-solid fa-exclamation"></i> განმარტება</button> 
+                    <button type="button" className='btn btn-primary fs-6 border border' onClick={() => setToggleDescAudio(prev => !prev)} >! განმარტება</button> 
 
                 </div>
                 
