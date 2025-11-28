@@ -22,7 +22,7 @@ app.use(cors(CorsOptions));
 app.use(express.json());
 
 app.get('/', (req,res) => {
-  res.send(`Welcome To Drivers-Tickets Server , Listening on Port${PORT} , URL : ${process.env.BACKEND_URL}`)
+  res.send(`Welcome To Drivers-Tickets Server , Listening on Port : ${PORT} , URL : ${process.env.BACKEND_URL}, ORIGIN URL : ${process.env.ORIGIN_URL}`)
 })
 
 app.use('/data', dataRoute);
