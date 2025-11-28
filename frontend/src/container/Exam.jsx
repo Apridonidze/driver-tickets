@@ -142,12 +142,10 @@ const Exam = () => {
                 btnRef.current[correctIndex].classList.add('btn-success'); //styles correct answer as correct
                 setAnsweredTicket(prev => [...prev , {ticketId : targetId , answerId :  answer.answerId , correctId: correctIndex}]); //pushes to answered ticket list stae
             };
-
-            let answeredTicketLast = answeredTicket[answeredTicket.length - 1]; //gets last ticket from list
-
-            console.log(answeredTicketLast)
-
-            if(answeredTicketLast !== undefined && cookies.token){ //if we have answered ticket then this statements execute
+            
+            let answeredTicketLast = answeredTicket.at(-1) || null;
+            
+            if(answeredTicketLast && cookies?.token){ //if we have answered ticket then this statements execute
                 
                 try{
 
