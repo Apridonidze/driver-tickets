@@ -5,6 +5,10 @@ const verifyToken = require('../config/verifyToken');//importing token verify mi
 
 const db = require('../db/db');//importing db query
 
+ticketRoute.get('/', (req,res) => {
+    res.send('Tickets Route')
+})
+
 ticketRoute.get('/answered-tickets' , verifyToken , async (req,res) => { //api first runs veriftToken middleware, if it successs then answered-tickets api executes
     
     try{

@@ -28,7 +28,7 @@ app.get('/', (req,res) => {
 app.use('/data', dataRoute);
 app.use('/cookies', cookiesProvider);
 app.use('/saved', savedRoute);
-app.use('/tickets', ticketRoute);
+app.use('/answered', ticketRoute);
 
 
 app.use('/audio', express.static(path.join(__dirname, 'data/audio')));

@@ -47,7 +47,7 @@ const Exam = () => {
 
             try{
 
-                await axios.get(`${BACKEND_URL}/tickets/answered-tickets` , {headers : {Authorization  : `Bearer ${cookies.token}`}}) //fetches data from api , sends headers to verify token
+                await axios.get(`${BACKEND_URL}/answered/answered-tickets` , {headers : {Authorization  : `Bearer ${cookies.token}`}}) //fetches data from api , sends headers to verify token
                 .then(resp => {                    
                     const data = resp.data; //defines resp.data
 
@@ -149,7 +149,7 @@ const Exam = () => {
                 
                 try{
 
-                    await axios.post(`${BACKEND_URL}/tickets/post-answered-tickets` , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))//post answered ticket to server and returns response
+                    await axios.post(`${BACKEND_URL}/answered/post-answered-tickets` , {answeredTicketLast} , {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => console.log(resp))//post answered ticket to server and returns response
 
                 }catch(err){
                     console.log('internal error');//consoles error
@@ -232,7 +232,7 @@ const Exam = () => {
 
         try{
 
-            await axios.delete(`${BACKEND_URL}/tickets/delete-answered-tickets`, {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => window.location.reload());//reloads page when delete statement is ssended to api to show user updated version as soon as possible
+            await axios.delete(`${BACKEND_URL}/answered/delete-answered-tickets`, {headers : {Authorization : `Bearer ${cookies.token}`}}).then(resp => window.location.reload());//reloads page when delete statement is ssended to api to show user updated version as soon as possible
 
         }catch(err){
             console.log(err); //consoles error
