@@ -22,7 +22,7 @@ cookiesProvider.get('/', async (req, res) => {
         return res.status(200).json({token : token});//returning token to frontend where frontned stores token as cookie.token for each user
 
     }catch(err){
-        return res.status(500).json('internal error');//returns 500 status code if internal error occurs
+        return res.status(500).json(err);//returns 500 status code if internal error occurs
     };
     
 });//api is used to generate random token to each user , so now saving answered ticket, saving tickets becomes possible for each user with token

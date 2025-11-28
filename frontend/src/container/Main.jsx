@@ -8,8 +8,9 @@ import { BACKEND_URL } from "../../config";
 
 const Main = () => {
 
-    const [ cookies , setCookies ] = useCookies(['token']); //cookies
+    const [ cookies , setCookies, removeCookie ] = useCookies(['token']); //cookies
 
+    console.log(BACKEND_URL)
     
     useEffect(() => {
 
