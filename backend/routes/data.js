@@ -18,7 +18,7 @@ dataRoute.get('/', async (req, res) => {
     return res.status(200).json(data);//returns response to frotned
 
   } catch (err) {
-    return res.status(500).json('internal error');//returns 500 status code if inernal error occurs
+    return res.status(500).json(err);//returns 500 status code if inernal error occurs
   }
 });//api is used to get all ticket data from backend folder to frontend when user once navigates on /exam route
 

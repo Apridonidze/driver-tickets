@@ -18,7 +18,7 @@ ticketRoute.get('/answered-tickets' , verifyToken , async (req,res) => { //api f
         return res.status(200).json(answeredTickets);//else if user has answered tickets , api returns array of answered tickets
         
     }catch(err){
-        return res.status(500).json('internal error'); //returns 500 status code if internal error occurs in api
+        return res.status(500).json(err); //returns 500 status code if internal error occurs in api
     };
 });//api is used to get user answered tickets from database and send suitable response to frontend , with its errorr handling
 
@@ -38,7 +38,7 @@ ticketRoute.post('/post-answered-tickets' , verifyToken, async (req,res) => {//a
         return res.status(200).json(`ticket inserted successfully`); //and returns 200 status code to frotnend
 
     }catch(err){
-        return res.status(500).json('internal error');//returns 500 status code to frontend if internal error occurs
+        return res.status(500).json(err);//returns 500 status code to frontend if internal error occurs
     };
 });//api is used to insert tickets that user answered into database, then api sends suitable response to frotnend 
 
@@ -53,7 +53,7 @@ ticketRoute.delete('/delete-answered-tickets' , verifyToken , async(req,res) => 
         return res.status(200).json('Ticket Deleted');//returns 200 status code if query successfully executyes
 
     }catch(err){
-        return res.status(500).json('internal error'); //returns 500 status code if internal error occurs
+        return res.status(500).json(err); //returns 500 status code if internal error occurs
     };
 });//api is used for reseting all of the progress that user had by clicking reset button , then api returns response to frotnend
 

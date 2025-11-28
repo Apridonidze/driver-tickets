@@ -30,7 +30,7 @@ savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first r
         return res.status(200).json(data);//api then retusn 200 status code to server with filtered data
 
     }catch(err){
-        return res.status(500).json('internal error');//returns 500 status code error if internal error occurs
+        return res.status(500).json(err);//returns 500 status code error if internal error occurs
     };
 });//api is used to get user saved tickets with all data that is needed for ticket to be displayed
 
@@ -48,7 +48,7 @@ savedRoute.get('/saved-tickets/:ticketId', verifyToken , async (req,res) => {//a
         return res.status(200).json(true); //else if saved tickets are found in db api returns 200 status code with true response
 
     }catch(err){
-        return res.status(500).json('internal error');//returns 500 status code to frotnend if internal error occurs
+        return res.status(500).json(err);//returns 500 status code to frotnend if internal error occurs
     };
 });//api if used to returns true/false based on if user has already answered this ticket 
 
@@ -64,7 +64,7 @@ savedRoute.post('/post-saved-tickets', verifyToken , async (req,res) => {//api f
         return res.status(200).json('saved successfully');//returns 200 status code if insertion executes succesffulyy
 
     }catch(err){
-        return res.status(500).json('internal error');//returnrs 500 status code if internal error occurs
+        return res.status(500).json(err);//returnrs 500 status code if internal error occurs
     };
 });//api is used for to insert saved ticket to database, when user click save button on frontend
 
@@ -80,7 +80,7 @@ savedRoute.delete('/delete-saved-tickets/:ticketId' , verifyToken , async (req,r
         return res.status(200).json('Unsaved');//returning 200 status code to frotnend if unsave event executes successfully
 
     }catch(err){
-        return res.status(500).json('internal error');//returns 500 status code if internal error occurs
+        return res.status(500).json(err);//returns 500 status code if internal error occurs
     };
 });//api is used to remove saved ticket from database, when user clicks on unsave ticket in frontend
 
