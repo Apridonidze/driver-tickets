@@ -37,7 +37,7 @@ ticketRoute.post('/post-answered-tickets' , verifyToken, async (req,res) => {//a
 
         if(isAlreadyInserted.length > 0) return res.status(400).json('Ticket Already Inserted');//checks if user already answered to this ticket and returns 400 status code error
 
-        await db.query('insert into answeredTickets (user_id, ticketId, answerId, correctId) values ( ? , ? , ? , ? )' , [data.userId ,data.answeredTicket.ticketId , data.answeredTicket.answerId , data.answeredTicket.correctId]); //else api inserts into database 
+        await db.query('insert into answeredtickets (user_id, ticketId, answerId, correctId) values ( ? , ? , ? , ? )' , [data.userId ,data.answeredTicket.ticketId , data.answeredTicket.answerId , data.answeredTicket.correctId]); //else api inserts into database 
         
         return res.status(200).json(`ticket inserted successfully`); //and returns 200 status code to frotnend
 
@@ -52,7 +52,7 @@ ticketRoute.delete('/delete-answered-tickets' , verifyToken , async(req,res) => 
 
     try{
 
-        await db.query('delete from answeredTickets where user_id = ?' , [userId]); //sening delete query to database
+        await db.query('delete from answeredtickets where user_id = ?' , [userId]); //sening delete query to database
 
         return res.status(200).json('Ticket Deleted');//returns 200 status code if query successfully executyes
 
