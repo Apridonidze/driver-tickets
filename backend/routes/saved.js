@@ -10,10 +10,6 @@ const tickets = require('../data/tikets.json'); //importing tickets data folder
 
 require('dotenv').config();
 
-savedRoute.use('/audio', express.static(path.resolve(__dirname, '../data/audio')));//defining urls for audio file
-savedRoute.use('/tickets' , express.static(path.resolve(__dirname, '../data/tickets'))); //defining url for ticket images 
-
-
 savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first runs verifyToken middleware, and if middelware vaidates user token then api is executes 
 
     try{
@@ -27,9 +23,9 @@ savedRoute.get('/saved-tickets', verifyToken , async (req,res) => {//api first r
 
         const data = tickets.map(ticket => ({
         ...ticket,
-        QuestionAudio: `${process.env.BACKEND_URL}/data/audio/${ticket.QuestionAudio}`,
-        DescriptionAudio: `${process.env.BACKEND_URL}/data/audio/${ticket.DescriptionAudio}`,
-        Image : `${process.env.BACKEND_URL}/data/tickets/${ticket.Image}`})).filter(dt => savedTicketsIds.includes(dt.Id)); //then data is defined by filtering all tickets data and variable only stores data whichs id === user saved ticket ids
+        QuestionAudio: `${process.env.BACKEND_URL}/audio/${ticket.QuestionAudio}`,
+        DescriptionAudio: `${process.env.BACKEND_URL}/audio/${ticket.DescriptionAudio}`,
+        Image : `${process.env.BACKEND_URL}/ticket/${ticket.Image}`})).filter(dt => savedTicketsIds.includes(dt.Id)); //then data is defined by filtering all tickets data and variable only stores data whichs id === user saved ticket ids
 
         return res.status(200).json(data);//api then retusn 200 status code to server with filtered data
 

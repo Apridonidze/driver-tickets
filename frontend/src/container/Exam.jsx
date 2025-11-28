@@ -53,6 +53,7 @@ const Exam = () => {
 
                     
                     const data = resp.data; //defines resp.data
+                    console.log(data)
 
                     setAnsweredTicket(data); //sets data in state
                     setTargetId(data.length === 0 ? 0 : data[data.length - 1].ticketId + 2) ; //gets last answered ticket id and navigates user to this ticket 
