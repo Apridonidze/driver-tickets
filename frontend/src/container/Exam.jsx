@@ -145,7 +145,7 @@ const Exam = () => {
 
             let answeredTicketLast = answeredTicket[answeredTicket.length - 1]; //gets last ticket from list
 
-            if(answeredTicketLast){ //if we have answered ticket then this statements execute
+            if(answeredTicketLast !== undefined && cookies.token){ //if we have answered ticket then this statements execute
                 
                 try{
 
