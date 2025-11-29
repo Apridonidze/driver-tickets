@@ -2,7 +2,10 @@
 
 **Driver Tickets** is a full-stack application designed to help users prepare for the Georgian theoretical driving exam. It provides access to all driving test tickets with **voice-assisted audio explanations** in Georgian, allowing users to study effectively, save difficult questions, and focus on improving their knowledge. The backend is built with **Node.js/Express** and MySQL, while the frontend uses **React + Vite**.
 
+The app is deployed on Vercel/Railway, and you can access it directly from your browser:[![Live Demo](https://driver-tickets.vercel.app/)](https://driver-tickets.vercel.app/)
 ---
+
+
 
 ## 🌟 Features
 
@@ -36,6 +39,12 @@
 
 ---
 
+## Live Demo
+
+Check out the live app in your browser:  
+[![Live Demo](https://driver-tickets.vercel.app/)](https://driver-tickets.vercel.app/)
+
+
 ## Installation
 
 1. **Clone the repository**
@@ -52,16 +61,17 @@
 cd backend
 create .env file and add following vairables to it :
 
-        ORIGIN_URL=http://localhost:5173
-        PORT=8080
+        JWT_SECRET_KEY="$fc59A636a27CBo5=sZ27o=Mc]WG76B"
 
-        JWT_SECRET_KEY='jwt secret key'
-
-        DB_HOST=hostname
-        DB_USER=username
-        DB_PASSWORD=password
+        DB_HOST=localhost
+        DB_USER=root
+        DB_PASSWORD=your_db_password
         DB_DB=driver_tickets_db
+        DB_PORT=1234
 
+        PORT=8080
+        ORIGIN_URL=http://localhost:5173
+        BACKEND_URL=http://localhost:8080
 ---
 
 4. **Database Setup**
@@ -82,4 +92,5 @@ create .env file and add following vairables to it :
 
 - Backend runs on http://localhost:8080 by default.
 - Frontend runs on http://localhost:5173 by default.
+
 
