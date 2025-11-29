@@ -2,10 +2,13 @@
 
 **Driver Tickets** is a full-stack application designed to help users prepare for the Georgian theoretical driving exam. It provides access to all driving test tickets with **voice-assisted audio explanations** in Georgian, allowing users to study effectively, save difficult questions, and focus on improving their knowledge. The backend is built with **Node.js/Express** and MySQL, while the frontend uses **React + Vite**.
 
-The app is deployed on Vercel/Railway, and you can access it directly from your browser: https://driver-tickets.vercel.app/
 ---
 
 
+The app is deployed on Vercel/Railway, and you can access it directly from your browser: https://driver-tickets.vercel.app/
+
+
+---
 
 ## 🌟 Features
 
@@ -92,6 +95,7 @@ create .env file and add following vairables to it :
 
 - Backend runs on http://localhost:8080 by default.
 - Frontend runs on http://localhost:5173 by default.
+
 
 
 
