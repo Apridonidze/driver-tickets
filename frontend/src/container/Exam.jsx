@@ -68,18 +68,18 @@ const Exam = () => {
             await axios.get(`${BACKEND_URL}/data?offset=${e}`).then(resp => {console.log(resp); setData(prev => [...prev, ...resp.data.data]) ; setCount(1083); setIsLoaded(true)}); //fetchs all exams data from api
         }catch(err){console.log(err);//consoles error
         };
-    };//function fetches all exams data on every mount
+    };//function fetches data by chunks based on offset amount, offset is passed as query to server and then when server returns data it is set to setData state with previous datas
 
     useEffect(() => {
-    if (targetId !== 0 && targetId % LIMIT === LIMIT - 5) {
-        const nextOffset = offset + LIMIT
-        setOffset(nextOffset);
-        fetchExams(nextOffset);
-  }
-}, [targetId]);
+        if (targetId !== 0 && targetId % LIMIT === LIMIT - 5) {
+            const nextOffset = offset + LIMIT; //defines next offset that needs to be called
+            setOffset(nextOffset); //sets offset in state
+            fetchExams(nextOffset); //decleared function and passes nextOffset variable to it
+        }; return;
+    }, [targetId]); //triggets on targetId change , if targetId is equal to limit - 5  (because we do not wanna fetch data when limit is reaced) increases offest by another hundered (limit) and decleares fetchExams function that fetches tickets
 
     useEffect(() => {
-        fetchExams(offset)
+        fetchExams(offset); //decleares function for first tickets to be fetched before offset is changed
         fetchAnswered(); //declears function
     },[]); //function mounts once every mount
 
