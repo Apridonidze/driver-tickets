@@ -4,10 +4,10 @@ const dataRoute = express.Router();//creating route
 const tickets = require('../data/tikets.json');//importing ticket json file
 
 
-dataRoute.get('/:offset', async (req, res) => {
+dataRoute.get('/', async (req, res) => {
 
     try {
-    const offset = req.params.offset || 0;
+    const offset = parseInt(req.query.offset) || 0;
     const limit = 100;
 
     const mappedTickets = tickets.map(ticket => ({

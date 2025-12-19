@@ -13,7 +13,7 @@ const Exam = () => {
     const [cookies] = useCookies(['token']); //cookies 
 
     const [data ,setData] = useState([]);
-    const [targetId , setTargetId] = useState(98);
+    const [targetId , setTargetId] = useState(93);
     const [ticket , setTicket] = useState();
     const [img , setImg] = useState();
     const [answers , setAnswers] = useState();
@@ -62,18 +62,25 @@ const Exam = () => {
             };
         };//function fetches answered tickets from db
 
-    const  fetchExams = async () => {
+    const  fetchExams = async (e) => {
 
         try{
-            await axios.get(`${BACKEND_URL}/data/${offset}`).then(resp => {console.log(resp); setData(prev => [...prev, ...resp.data.data]) ; setCount(1083); setIsLoaded(true)}); //fetchs all exams data from api
+            await axios.get(`${BACKEND_URL}/data?offset=${e}`).then(resp => {console.log(resp); setData(prev => [...prev, ...resp.data.data]) ; setCount(1083); setIsLoaded(true)}); //fetchs all exams data from api
         }catch(err){console.log(err);//consoles error
         };
     };//function fetches all exams data on every mount
 
     useEffect(() => {
+    if (targetId !== 0 && targetId % LIMIT === LIMIT - 5) {
+        const nextOffset = offset + LIMIT
+        setOffset(nextOffset);
+        fetchExams(nextOffset);
+  }
+}, [targetId]);
 
+    useEffect(() => {
+        fetchExams(offset)
         fetchAnswered(); //declears function
-        fetchExams()
     },[]); //function mounts once every mount
 
 
