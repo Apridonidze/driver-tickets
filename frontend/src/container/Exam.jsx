@@ -13,7 +13,7 @@ const Exam = () => {
     const [cookies] = useCookies(['token']); //cookies 
 
     const [data ,setData] = useState([]);
-    const [targetId , setTargetId] = useState(93);
+    const [targetId , setTargetId] = useState(0);
     const [ticket , setTicket] = useState();
     const [img , setImg] = useState();
     const [answers , setAnswers] = useState();
