@@ -211,8 +211,6 @@ const Exam = () => {
         }return; //if refs are not defined then function does nothing   
     };//function is triggered on answer button presses
 
-console.log(targetId)
-console.log(data)
     const handleSave = async(data) => {
 
         try{
