@@ -12,8 +12,8 @@ const Exam = () => {
 
     const [cookies] = useCookies(['token']); //cookies 
 
-    const [data ,setData] = useState();
-    const [targetId , setTargetId] = useState(0);
+    const [data ,setData] = useState([]);
+    const [targetId , setTargetId] = useState(98);
     const [ticket , setTicket] = useState();
     const [img , setImg] = useState();
     const [answers , setAnswers] = useState();
@@ -38,12 +38,11 @@ const Exam = () => {
     const [answeredTicket , setAnsweredTicket] = useState([]);
     const [isAnswered , setIsAnswered] = useState(null); //states to check answered tickets
 
+    const [offset, setOffset] = useState(0);
+    const LIMIT = 100;
 
 
-    useEffect(() => {
-
-
-        const fetchAnswered = async () => {
+     const fetchAnswered = async () => {
 
             try{
 
@@ -63,18 +62,18 @@ const Exam = () => {
             };
         };//function fetches answered tickets from db
 
-        const  fetchExams = async () => {
+    const  fetchExams = async () => {
 
-            try{
-                axios.get(`${BACKEND_URL}/data`).then(resp => {console.log(resp),setData(resp.data), setCount(resp.data.length)}); //fetchs all exams data from api
-            }catch(err){
-                console.log(err);//consoles error
-            };
-        };//function fetches all exams data on every mount
+        try{
+            await axios.get(`${BACKEND_URL}/data/${offset}`).then(resp => {console.log(resp); setData(prev => [...prev, ...resp.data.data]) ; setCount(1083); setIsLoaded(true)}); //fetchs all exams data from api
+        }catch(err){console.log(err);//consoles error
+        };
+    };//function fetches all exams data on every mount
 
-        fetchExams();//declears function
+    useEffect(() => {
+
         fetchAnswered(); //declears function
-
+        fetchExams()
     },[]); //function mounts once every mount
 
 
@@ -82,7 +81,7 @@ const Exam = () => {
 
         const targetTicket =  () => {
 
-            if(data){
+            if(isLoaded){
 
                 setTicket(data[targetId]); //sets ticket based on targetId
                 setImg(data[targetId].Image.slice(data[targetId].Image.length - 4 , data[targetId].Image.length) == '.jpg' ? data[targetId].Image : false); //chekcs if ticket has image if so it sets in state else sets false to state
@@ -90,7 +89,6 @@ const Exam = () => {
                 setExplanationAudio(data[targetId].DescriptionAudio);//sets question explanation into state
                 setAnswers(data[targetId].Answers); //sets answers in state
                 setIsAnswered(answeredTicket ? answeredTicket.filter(ans => ans.ticketId === targetId) : null); //checks if ticket is alreadt answered
-                setIsLoaded(true);//sets state to true to define that ticket is fully loaded
 
             } return ;
         };
@@ -196,7 +194,7 @@ const Exam = () => {
         if(btnRef && btnRef.current){//defines ref
             if(d === '+'){ //checks if user pressed next page buttopn
                 setToggleDescAudio(false); //untoggles description
-                setTargetId(prev => prev + 1 > data.length - 1 ? data.length - 1 : prev + 1); //increasese targetId (state filters targetId values that are greater than data.length or less than zero)
+                setTargetId(prev => prev + 1); //increasese targetId (state filters targetId values that are greater than data.length or less than zero)
                 btnRef.current.filter(btn => btn !== null).forEach(btn => btn.classList.remove('btn-danger' , 'btn-success')); //filters button refs that are null and removes classes from rest
             }else {//checks if user pressed preev page button
                 setToggleDescAudio(false); //untoggles description
@@ -206,7 +204,8 @@ const Exam = () => {
         }return; //if refs are not defined then function does nothing   
     };//function is triggered on answer button presses
 
-
+console.log(targetId)
+console.log(data)
     const handleSave = async(data) => {
 
         try{
@@ -290,7 +289,7 @@ const Exam = () => {
                 
                 </div>
                 
-                {isLoaded ? 
+                {ticket ? 
                     <div className="ticket">
 
                         <div className="ticket-img py-2">
