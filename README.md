@@ -19,10 +19,10 @@
 
 ## 🛠 Technologies Used
 
-- **Frontend:** React + Vite, Bootstrap, CSS
+- **Frontend:** React, Bootstrap, CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MySQL
-- **Version Control:** Git
+- **Other Tools:** Git, GitHub, Vercel, Railway
 
 ---
 
