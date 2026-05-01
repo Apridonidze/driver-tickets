@@ -17,21 +17,22 @@
 
 ---
 
-## 🖼 Screenshots
-
-![Main Page](/frontend/src/design/Screenshot%202025-11-26%20174306.png)
-![Exam Page](/frontend/src/design/Screenshot%202025-11-26%20174331.png)
-![Mobile Version](/frontend/src/design/Screenshot%202025-11-26%20174442.png)
-![Mobile Version](/frontend/src/design/Screenshot%202025-11-26%20174500.png)
-
----
-
 ## 🛠 Technologies Used
 
 - **Frontend:** React + Vite, Bootstrap, CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MySQL
 - **Version Control:** Git
+
+---
+
+
+## 🖼 Screenshots
+
+![Main Page](/frontend/src/design/Screenshot%202025-11-26%20174306.png)
+![Exam Page](/frontend/src/design/Screenshot%202025-11-26%20174331.png)
+![Mobile Version](/frontend/src/design/Screenshot%202025-11-26%20174442.png)
+![Mobile Version](/frontend/src/design/Screenshot%202025-11-26%20174500.png)
 
 ---
 
