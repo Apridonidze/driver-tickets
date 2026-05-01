@@ -3,13 +3,6 @@
 **Driver Tickets** is a full-stack application designed to help users prepare for the Georgian theoretical driving exam. It provides access to all driving test tickets with **voice-assisted audio explanations** in Georgian, allowing users to study effectively, save difficult questions, and focus on improving their knowledge. The backend is built with **Node.js/Express** and MySQL, while the frontend uses **React + Vite**.
 
 ---
-
-
-The app is deployed on Vercel/Railway, and you can access it directly from your browser: https://driver-tickets.vercel.app/
-
-
----
-
 ## 🌟 Features
 
 - Access **all 1000 Georgian driving test tickets**.
@@ -42,22 +35,16 @@ The app is deployed on Vercel/Railway, and you can access it directly from your 
 
 ---
 
-## Live Demo
-
-Check out the live app in your browser:  
-[![Live Demo](https://driver-tickets.vercel.app/)](https://driver-tickets.vercel.app/)
-
-
 ## Installation
 
 1. **Clone the repository**
 
-    git clone https://github.com/Apridonidze/driver-tickets
+    ```bash git clone https://github.com/Apridonidze/driver-tickets```<br/>
 
 2. **Install dependencies**
 
-    cd frontend npm install
-    cd backend npm install
+    ```bash cd frontend npm install``` <br/>
+    ```bash cd backend npm install```
 
 3. **Create Enviromental Variabels**
 
@@ -77,25 +64,13 @@ create .env file and add following vairables to it :
         BACKEND_URL=http://localhost:8080
 ---
 
-4. **Database Setup**
+4. **Database Setup** <br/>
 
-    create database driver_tickets_db
-
+    ```bash create database driver_tickets_db ``` <br/>
     import ./database/schema.sql content into MySql Editor
 
 ---
 
-5. **Run Server**
-
-    cd frontend npm run dev
-
-    cd backend nodemon server.js
-
----
-
-- Backend runs on http://localhost:8080 by default.
-- Frontend runs on http://localhost:5173 by default.
-
-
-
-
+5. **Run Server** <br/>
+    ```bash cd frontend npm run dev```<br/>
+    ```bash cd backend nodemon server.js```
